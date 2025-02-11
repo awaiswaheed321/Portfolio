@@ -92,7 +92,7 @@ function Hero() {
               <Button
                 variant="contained"
                 startIcon={<Download />}
-                href="/path-to-your-cv.pdf"
+                href="/Portfolio/AwaisWaheed_Resume.pdf"
                 download
                 sx={primaryButtonStyle}
               >
