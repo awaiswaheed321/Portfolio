@@ -29,7 +29,7 @@ const ResumeWebsite = () => {
           justifyContent: "center",
         }}
       >
-        {/* Soft Accent Shape at Top */}
+        {/* Soft Accent Shape at Top of background */}
         <Box
           sx={{
             position: "absolute",
