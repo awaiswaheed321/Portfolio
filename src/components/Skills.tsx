@@ -2,21 +2,29 @@ import React from "react";
 import { Box, Typography, Stack } from "@mui/material";
 
 const skills = [
-  "REST",
-  "API Design",
-  "Agile",
-  "Scrum",
-  "CI/CD",
-  "Requirement Analysis",
+  "Problem Solving",
+  "Critical Thinking",
   "Design & Architecture",
+  "API Design",
+  "Code Review & Best Practices",
+  "REST",
+  "Requirement Analysis",
+  "Scalability & Performance Optimization",
+  "CI/CD",
   "Testing",
   "Deployment",
+  "Agile",
+  "Scrum",
+  "Communication & Collaboration",
+  "Continuous Improvement & Learning",
+  "Time Management",
   "Design Patterns"
 ];
 
+
 const Skills: React.FC = () => {
   return (
-    <Box id="skills" sx={{ maxWidth: "4xl", mx: "auto", p: 3 }}>
+    <Box id="skills" sx={{ maxWidth: "4xl", mx: "auto", pt: 2 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom>
         Skills
       </Typography>
@@ -28,17 +36,10 @@ const Skills: React.FC = () => {
             sx={{
               px: 2,
               py: 1,
-              bgcolor: (theme) => theme.palette.grey[50],
+              bgcolor: (theme) => theme.palette.grey[200],
               borderRadius: 1,
               fontSize: "0.875rem",
               color: "text.primary",
-              cursor: "default",
-              transition: "all 0.2s ease-in-out",
-              "&:hover": {
-                bgcolor: (theme) => theme.palette.grey[200],
-                transform: "translateY(-2px)",
-                boxShadow: (theme) => theme.shadows[2],
-              }
             }}
           >
             <Typography>{skill}</Typography>

@@ -1,42 +1,55 @@
-import { Download, GitHub, LinkedIn, Mail, Phone, LocationOn } from "@mui/icons-material";
-import { Avatar, Box, Button, Grid, Stack, Typography, Tooltip } from "@mui/material";
+import {
+  Download,
+  GitHub,
+  LinkedIn,
+  LocationOn,
+  Mail,
+} from "@mui/icons-material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Grid,
+  Stack,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
 import personalImage from "../assets/01.png";
 import { contactInfo } from "../ContactInfo";
 
 function Hero() {
   const [showEmail, setShowEmail] = useState(false);
-  const [showPhone, setShowPhone] = useState(false);
 
   const buttonStyle = {
-    textTransform: 'none',
+    textTransform: "none",
     px: 2.5,
     py: 1,
     borderRadius: 2,
-    transition: 'all 0.2s ease-in-out',
-    '&:hover': {
-      transform: 'translateY(-2px)',
-      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+    transition: "all 0.2s ease-in-out",
+    "&:hover": {
+      transform: "translateY(-2px)",
+      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
     },
   };
 
   const primaryButtonStyle = {
     ...buttonStyle,
-    bgcolor: 'primary.main',
-    '&:hover': {
-      ...buttonStyle['&:hover'],
-      bgcolor: 'primary.dark',
+    bgcolor: "primary.main",
+    "&:hover": {
+      ...buttonStyle["&:hover"],
+      bgcolor: "primary.dark",
     },
   };
 
   const outlinedButtonStyle = {
     ...buttonStyle,
-    borderColor: 'grey.300',
-    color: 'text.primary',
-    '&:hover': {
-      ...buttonStyle['&:hover'],
-      borderColor: 'primary.main',
-      bgcolor: 'transparent',
+    borderColor: "grey.300",
+    color: "text.primary",
+    "&:hover": {
+      ...buttonStyle["&:hover"],
+      borderColor: "primary.main",
+      bgcolor: "transparent",
     },
   };
 
@@ -50,7 +63,7 @@ function Hero() {
               width: 250,
               height: 250,
               mx: "auto",
-              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             }}
           />
         </Grid>
@@ -58,36 +71,29 @@ function Hero() {
           <Typography variant="h4" fontWeight="bold" gutterBottom>
             Awais Waheed
           </Typography>
-          <Stack 
-            direction="row" 
-            spacing={3} 
-            alignItems="center" 
-            sx={{ mb: 2 }}
-          >
+          <Stack direction="row" spacing={3} alignItems="center" sx={{ mb: 2 }}>
             <Typography variant="h6" color="text.secondary">
               Senior Software Engineer
             </Typography>
-            <Stack 
-              direction="row" 
-              spacing={1} 
+            <Stack
+              direction="row"
+              spacing={1}
               alignItems="center"
               sx={{
-                color: 'text.secondary',
-                bgcolor: 'grey.50',
+                color: "text.secondary",
+                bgcolor: "grey.50",
                 px: 1.5,
                 py: 0.5,
                 borderRadius: 2,
-                transition: 'all 0.2s ease-in-out',
-                '&:hover': {
-                  bgcolor: 'grey.100',
-                  transform: 'translateY(-1px)',
-                }
+                transition: "all 0.2s ease-in-out",
+                "&:hover": {
+                  bgcolor: "grey.100",
+                  transform: "translateY(-1px)",
+                },
               }}
             >
               <LocationOn sx={{ fontSize: 20 }} />
-              <Typography variant="body2">
-                Chicago, Illinois
-              </Typography>
+              <Typography variant="body2">Dallas, Texas</Typography>
             </Stack>
           </Stack>
           <Typography
@@ -103,90 +109,68 @@ function Hero() {
             business needs.
           </Typography>
 
-          <Stack spacing={2}>
-            <Box 
-              sx={{ 
-                display: "flex", 
-                gap: 2, 
-                flexWrap: "wrap"
-              }}
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              variant="contained"
+              startIcon={<Download />}
+              href="/Portfolio/AwaisWaheed_Resume.pdf"
+              download
+              sx={primaryButtonStyle}
             >
-              <Button
-                variant="contained"
-                startIcon={<Download />}
-                href="/Portfolio/AwaisWaheed_Resume.pdf"
-                download
-                sx={primaryButtonStyle}
-              >
-                Download CV
-              </Button>
+              Download CV
+            </Button>
 
-              <Tooltip 
-                title={showEmail ? "Click to copy" : "Click to show email"}
-                arrow
-                placement="top"
-              >
-                <Button
-                  variant="outlined"
-                  startIcon={<Mail />}
-                  onClick={() => {
-                    if (showEmail) {
-                      navigator.clipboard.writeText(contactInfo.email);
-                    }
-                    setShowEmail(!showEmail);
-                  }}
-                  sx={outlinedButtonStyle}
-                >
-                  {showEmail ? contactInfo.email : "Email"}
-                </Button>
-              </Tooltip>
-
-              <Tooltip 
-                title={showPhone ? "Click to copy" : "Click to show phone"}
-                arrow
-                placement="top"
-              >
-                <Button
-                  variant="outlined"
-                  startIcon={<Phone />}
-                  onClick={() => {
-                    if (showPhone) {
-                      navigator.clipboard.writeText(contactInfo.phone);
-                    }
-                    setShowPhone(!showPhone);
-                  }}
-                  sx={outlinedButtonStyle}
-                >
-                  {showPhone ? contactInfo.phone : "Phone"}
-                </Button>
-              </Tooltip>
-            </Box>
-
-            <Box 
-              sx={{ 
-                display: "flex", 
-                gap: 2
-              }}
+            <Tooltip
+              title={showEmail ? "Click to copy" : "Click to show email"}
+              arrow
+              placement="top"
             >
               <Button
                 variant="outlined"
-                startIcon={<GitHub />}
-                onClick={() => window.open(contactInfo.github, "_blank")}
+                startIcon={<Mail />}
+                onClick={() => {
+                  if (showEmail) {
+                    navigator.clipboard.writeText(contactInfo.email);
+                  }
+                  setShowEmail(!showEmail);
+                }}
                 sx={outlinedButtonStyle}
               >
-                GitHub
+                {showEmail ? contactInfo.email : "Email"}
               </Button>
+            </Tooltip>
 
-              <Button
-                variant="outlined"
-                startIcon={<LinkedIn />}
-                onClick={() => window.open(contactInfo.linkedin, "_blank")}
-                sx={outlinedButtonStyle}
-              >
-                LinkedIn
-              </Button>
-            </Box>
-          </Stack>
+            <Button
+              variant="outlined"
+              startIcon={<GitHub />}
+              onClick={() => window.open(contactInfo.github, "_blank")}
+              sx={outlinedButtonStyle}
+            >
+              GitHub
+            </Button>
+
+            <Button
+              variant="outlined"
+              startIcon={<LinkedIn />}
+              onClick={() => window.open(contactInfo.linkedin, "_blank")}
+              sx={outlinedButtonStyle}
+            >
+              LinkedIn
+            </Button>
+          </Box>
+
+          <Box
+            sx={{
+              display: "flex",
+              gap: 2,
+            }}
+          ></Box>
         </Grid>
       </Grid>
     </Box>
