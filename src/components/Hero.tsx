@@ -1,18 +1,12 @@
-import { Download, GitHub, LinkedIn, Mail, Phone } from "@mui/icons-material";
+import { Download, GitHub, LinkedIn, Mail, Phone, LocationOn } from "@mui/icons-material";
 import { Avatar, Box, Button, Grid, Stack, Typography, Tooltip } from "@mui/material";
 import { useState } from "react";
-import personalImage from "../assets/AW.jpg";
+import personalImage from "../assets/01.png";
+import { contactInfo } from "../ContactInfo";
 
 function Hero() {
   const [showEmail, setShowEmail] = useState(false);
   const [showPhone, setShowPhone] = useState(false);
-
-  const contactInfo = {
-    email: "awaiswaheed321@gmail.com",
-    phone: "+1 (945) 546-4790",
-    github: "https://github.com/awaiswaheed321",
-    linkedin: "https://www.linkedin.com/in/awaiswaheed96/",
-  };
 
   const buttonStyle = {
     textTransform: 'none',
@@ -64,9 +58,38 @@ function Hero() {
           <Typography variant="h4" fontWeight="bold" gutterBottom>
             Awais Waheed
           </Typography>
-          <Typography variant="h6" color="text.secondary" gutterBottom>
-            Senior Software Engineer
-          </Typography>
+          <Stack 
+            direction="row" 
+            spacing={3} 
+            alignItems="center" 
+            sx={{ mb: 2 }}
+          >
+            <Typography variant="h6" color="text.secondary">
+              Senior Software Engineer
+            </Typography>
+            <Stack 
+              direction="row" 
+              spacing={1} 
+              alignItems="center"
+              sx={{
+                color: 'text.secondary',
+                bgcolor: 'grey.50',
+                px: 1.5,
+                py: 0.5,
+                borderRadius: 2,
+                transition: 'all 0.2s ease-in-out',
+                '&:hover': {
+                  bgcolor: 'grey.100',
+                  transform: 'translateY(-1px)',
+                }
+              }}
+            >
+              <LocationOn sx={{ fontSize: 20 }} />
+              <Typography variant="body2">
+                Chicago, Illinois
+              </Typography>
+            </Stack>
+          </Stack>
           <Typography
             color="text.secondary"
             paragraph
@@ -77,8 +100,7 @@ function Hero() {
             Java, Spring Boot, Hibernate, MySQL, and REST APIs, with additional
             experience in Kubernetes, AWS, and Kafka. Passionate about
             delivering high-quality, efficient software that aligns with
-            business needs. Currently pursuing MS in Computer Science at
-            MIU, Iowa.
+            business needs.
           </Typography>
 
           <Stack spacing={2}>

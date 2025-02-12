@@ -4,6 +4,7 @@ import ExperienceContainer from "./ExperienceContainer";
 import Education from "../components/Education";
 import Skills from "../components/Skills";
 import Technologies from "../components/Technologies";
+import Footer from "../components/Footer";
 
 const ResumeWebsite = () => {
   return (
@@ -12,9 +13,10 @@ const ResumeWebsite = () => {
       <Container >
         <Hero />
         <ExperienceContainer />
-        <Education />
         <Technologies />
         <Skills />
+        <Education />
+        <Footer/>
       </Container>
     </Box>
   );

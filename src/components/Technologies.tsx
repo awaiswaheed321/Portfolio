@@ -43,7 +43,7 @@ const technologies = [
 
 const Technologies: React.FC = () => {
   return (
-    <Box id="technologies">
+    <Box id="technologies" sx = {{pt: 2}}>
       <Typography variant="h5" fontWeight="bold" gutterBottom sx={{ pb: 1 }}>
         Technologies
       </Typography>

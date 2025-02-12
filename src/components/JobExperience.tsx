@@ -6,6 +6,8 @@ import {
   Box,
   Grid,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import React, { useEffect, useRef } from "react";
 
@@ -31,27 +33,46 @@ const JobExperience: React.FC<JobExperienceProps> = ({
   onChange,
 }) => {
   const accordionRef = useRef<HTMLDivElement>(null);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   useEffect(() => {
     if (expanded && accordionRef.current) {
+      const ANIMATION_DURATION = 300;
+      const HEADER_OFFSET = isMobile ? 56 : 64;
+      
       setTimeout(() => {
-        accordionRef.current?.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
+        const elementPosition = accordionRef.current?.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - HEADER_OFFSET;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
         });
-      }, 100);
+      }, ANIMATION_DURATION);
     }
-  }, [expanded]);
+  }, [expanded, isMobile]);
 
   return (
-    <Box ref={accordionRef}>
+    <Box 
+      ref={accordionRef}
+      sx={{
+        scrollMarginTop: theme => theme.spacing(isMobile ? 8 : 10),
+        mb: 2 // Add margin bottom to prevent accordions from touching
+      }}
+    >
       <Accordion
         expanded={expanded}
         onChange={onChange}
+        TransitionProps={{ timeout: 300 }} // Match with animation duration
         sx={{
           borderRadius: 2,
           overflow: "hidden",
           boxShadow: 2,
           "&:before": { display: "none" },
+          "&.Mui-expanded": {
+            margin: 0, // Prevent margin jumping
+          }
         }}
       >
         <AccordionSummary
@@ -60,9 +81,13 @@ const JobExperience: React.FC<JobExperienceProps> = ({
             bgcolor: "grey.200",
             color: "text.primary",
             borderRadius: 2,
+            minHeight: 64, // Ensure consistent height
             "& .MuiAccordionSummary-content": {
-              marginY: 1,
-            },
+              margin: "12px 0",
+              "&.Mui-expanded": {
+                margin: "12px 0" // Consistent margins when expanded
+              }
+            }
           }}
         >
           <Grid container spacing={2} alignItems="center">
@@ -77,19 +102,37 @@ const JobExperience: React.FC<JobExperienceProps> = ({
           </Grid>
         </AccordionSummary>
 
-        <AccordionDetails sx={{ bgcolor: "grey.100", borderRadius: 2, p: 2 }}>
+        <AccordionDetails 
+          sx={{ 
+            bgcolor: "grey.100", 
+            borderRadius: 2, 
+            p: 2,
+            transition: theme => theme.transitions.create('all')
+          }}
+        >
           <Box>
-            <ul style={{ paddingLeft: 20 }}>
+            <ul style={{ 
+              paddingLeft: 20,
+              margin: '8px 0'
+            }}>
               {responsibilities.map((task, index) => (
                 <li key={index}>
-                  <Typography variant="body2" color="text.primary">
+                  <Typography 
+                    variant="body2" 
+                    color="text.primary"
+                    sx={{ mb: 1 }}
+                  >
                     {task}
                   </Typography>
                 </li>
               ))}
             </ul>
-            <Typography variant="body2" color="text.primary">
-              Technologies Used: {technologies}
+            <Typography 
+              variant="body2" 
+              color="text.primary"
+              sx={{ mt: 2 }}
+            >
+              <strong>Technologies Used:</strong> {technologies}
             </Typography>
           </Box>
         </AccordionDetails>

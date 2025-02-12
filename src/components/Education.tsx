@@ -27,7 +27,7 @@ const Education: React.FC = () => {
             elevation={3}
             sx={{
               p: 2,
-              bgcolor: "grey.200",
+              bgcolor: "grey.50",
               color: "text.primary",
               borderRadius: 2,
               
@@ -49,7 +49,7 @@ const Education: React.FC = () => {
             elevation={3}
             sx={{
               p: 2,
-              bgcolor: "grey.200",
+              bgcolor: "grey.50",
               color: "text.primary",
               borderRadius: 2,
             }}

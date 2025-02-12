@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, Chip } from "@mui/material";
+import { Box, Typography, Stack } from "@mui/material";
 
 const skills = [
   "REST",
@@ -16,28 +16,35 @@ const skills = [
 
 const Skills: React.FC = () => {
   return (
-    <Box id="skills">
+    <Box id="skills" sx={{ maxWidth: "4xl", mx: "auto", p: 3 }}>
       <Typography variant="h5" fontWeight="bold" gutterBottom>
         Skills
       </Typography>
 
-      <Grid container spacing={1} justifyContent="center">
+      <Stack direction="row" flexWrap="wrap" gap={1.5}>
         {skills.map((skill, index) => (
-          <Grid item key={index}>
-            <Chip
-              label={skill}
-              sx={{
-                px: 2,
-                py: 1,
-                fontSize: "0.9rem",
-                fontWeight: "500",
-                bgcolor: "grey.100",
-                border: "1px solid #ccc",
-              }}
-            />
-          </Grid>
+          <Box
+            key={index}
+            sx={{
+              px: 2,
+              py: 1,
+              bgcolor: (theme) => theme.palette.grey[50],
+              borderRadius: 1,
+              fontSize: "0.875rem",
+              color: "text.primary",
+              cursor: "default",
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                bgcolor: (theme) => theme.palette.grey[200],
+                transform: "translateY(-2px)",
+                boxShadow: (theme) => theme.shadows[2],
+              }
+            }}
+          >
+            <Typography>{skill}</Typography>
+          </Box>
         ))}
-      </Grid>
+      </Stack>
     </Box>
   );
 };
