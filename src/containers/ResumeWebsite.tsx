@@ -9,9 +9,7 @@ import ExperienceContainer from "./ExperienceContainer";
 
 const theme = createTheme({
   palette: {
-    primary: { main: "#4169E1" }, // Royal Blue
-    secondary: { main: "#F5F9FF" }, // Soft Sky Blue
-    background: { default: "#F8FAFD" }, // Light Cool Background
+    primary: { main: "#6b9080" },
   },
   typography: {
     fontFamily: '"Segoe UI", sans-serif',
@@ -24,7 +22,7 @@ const ResumeWebsite = () => {
       <Box
         sx={{
           minHeight: "100vh",
-          background: "radial-gradient(circle at top, rgba(65,105,225,0.3), rgba(245,249,255,0.8))",
+          background: "radial-gradient(circle at top, rgba(204, 227, 222,0.3), rgba(245,249,255,0.8))",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -39,7 +37,7 @@ const ResumeWebsite = () => {
             left: 0,
             width: "100%",
             height: "200px",
-            backgroundColor: "rgba(65, 105, 225, 0.1)",
+            backgroundColor: "rgba(49, 145, 145, 0.1)",
             clipPath: "polygon(0 0, 100% 0, 100% 60%, 0 100%)",
           }}
         />
