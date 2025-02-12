@@ -42,8 +42,12 @@ const JobExperience: React.FC<JobExperienceProps> = ({
       const HEADER_OFFSET = isMobile ? 56 : 64;
       
       setTimeout(() => {
-        const elementPosition = accordionRef.current?.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - HEADER_OFFSET;
+        const element = accordionRef.current;
+        if (!element) return;
+
+        const rect = element.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const offsetPosition = rect.top + scrollTop - HEADER_OFFSET;
 
         window.scrollTo({
           top: offsetPosition,
@@ -58,20 +62,20 @@ const JobExperience: React.FC<JobExperienceProps> = ({
       ref={accordionRef}
       sx={{
         scrollMarginTop: theme => theme.spacing(isMobile ? 8 : 10),
-        mb: 2 // Add margin bottom to prevent accordions from touching
+        mb: 2
       }}
     >
       <Accordion
         expanded={expanded}
         onChange={onChange}
-        TransitionProps={{ timeout: 300 }} // Match with animation duration
+        TransitionProps={{ timeout: 300 }}
         sx={{
           borderRadius: 2,
           overflow: "hidden",
           boxShadow: 2,
           "&:before": { display: "none" },
           "&.Mui-expanded": {
-            margin: 0, // Prevent margin jumping
+            margin: 0,
           }
         }}
       >
@@ -81,11 +85,11 @@ const JobExperience: React.FC<JobExperienceProps> = ({
             bgcolor: "grey.200",
             color: "text.primary",
             borderRadius: 2,
-            minHeight: 64, // Ensure consistent height
+            minHeight: 64,
             "& .MuiAccordionSummary-content": {
               margin: "12px 0",
               "&.Mui-expanded": {
-                margin: "12px 0" // Consistent margins when expanded
+                margin: "12px 0"
               }
             }
           }}
