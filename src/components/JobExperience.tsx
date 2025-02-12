@@ -38,7 +38,7 @@ const JobExperience: React.FC<JobExperienceProps> = ({
 
   useEffect(() => {
     if (expanded && accordionRef.current) {
-      const ANIMATION_DURATION = 300;
+      const ANIMATION_DURATION = 150;
       const HEADER_OFFSET = isMobile ? 56 : 64;
       
       setTimeout(() => {
@@ -68,7 +68,7 @@ const JobExperience: React.FC<JobExperienceProps> = ({
       <Accordion
         expanded={expanded}
         onChange={onChange}
-        TransitionProps={{ timeout: 300 }}
+        TransitionProps={{ timeout: 150 }}
         sx={{
           borderRadius: 2,
           overflow: "hidden",
