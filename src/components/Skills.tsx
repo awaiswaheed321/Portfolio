@@ -3,24 +3,14 @@ import { Box, Typography, Stack } from "@mui/material";
 
 const skills = [
   "Problem Solving",
-  "Critical Thinking",
   "Design & Architecture",
   "API Design",
   "Code Review & Best Practices",
-  "REST",
-  "Requirement Analysis",
   "Scalability & Performance Optimization",
   "CI/CD",
   "Testing",
-  "Deployment",
-  "Agile",
-  "Scrum",
-  "Communication & Collaboration",
-  "Continuous Improvement & Learning",
-  "Time Management",
   "Design Patterns"
 ];
-
 
 const Skills: React.FC = () => {
   return (
