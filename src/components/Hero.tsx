@@ -5,21 +5,11 @@ import {
   LocationOn,
   Mail,
 } from "@mui/icons-material";
-import {
-  Avatar,
-  Box,
-  Button,
-  Grid,
-  Stack,
-  Tooltip,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
+import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material";
 import personalImage from "../assets/01.png";
 import { contactInfo } from "../ContactInfo";
 
 function Hero() {
-  const [showEmail, setShowEmail] = useState(false);
 
   const buttonStyle = {
     textTransform: "none",
@@ -119,32 +109,21 @@ function Hero() {
             <Button
               variant="contained"
               startIcon={<Download />}
-              href="/Portfolio/AwaisWaheed_Resume.pdf"
+              href="/AwaisWaheed_Resume.pdf"
               download
               sx={primaryButtonStyle}
             >
               Download CV
             </Button>
 
-            <Tooltip
-              title={showEmail ? "Click to copy" : "Click to show email"}
-              arrow
-              placement="top"
+            <Button
+              variant="outlined"
+              startIcon={<Mail />}
+              href={`mailto:${contactInfo.email}`}
+              sx={outlinedButtonStyle}
             >
-              <Button
-                variant="outlined"
-                startIcon={<Mail />}
-                onClick={() => {
-                  if (showEmail) {
-                    navigator.clipboard.writeText(contactInfo.email);
-                  }
-                  setShowEmail(!showEmail);
-                }}
-                sx={outlinedButtonStyle}
-              >
-                {showEmail ? contactInfo.email : "Email"}
-              </Button>
-            </Tooltip>
+              Email
+            </Button>
 
             <Button
               variant="outlined"

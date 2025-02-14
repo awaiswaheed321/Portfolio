@@ -4,12 +4,12 @@ import React from "react";
 const Education: React.FC = () => {
   const educationData = {
     bachelors: {
-      degree: "Bachelors in Computer Science",
+      degree: "Bachelors of Science in Computer Science",
       university: "SEECS - NUST, Islamabad, Pakistan",
       year: "2015 - 2019",
     },
     masters: {
-      degree: "Masters in Computer Science",
+      degree: "Masters of Science in Computer Science",
       university: "Maharishi International University, Fairfield, Iowa",
       year: "2024 - Present",
     },
