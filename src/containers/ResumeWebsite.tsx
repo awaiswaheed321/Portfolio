@@ -6,6 +6,7 @@ import Hero from "../components/Hero";
 import Skills from "../components/Skills";
 import Technologies from "../components/Technologies";
 import ExperienceContainer from "./ExperienceContainer";
+import Projects from "../components/Projects";
 
 const theme = createTheme({
   palette: {
@@ -55,6 +56,7 @@ const ResumeWebsite = () => {
         >
           <Hero />
           <ExperienceContainer />
+          <Projects />
           <Technologies />
           <Skills />
           <Education />

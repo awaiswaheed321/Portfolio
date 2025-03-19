@@ -6,7 +6,7 @@ import {
   Mail,
 } from "@mui/icons-material";
 import { Avatar, Box, Button, Grid, Stack, Typography } from "@mui/material";
-import personalImage from "../assets/01.png";
+import personalImage from "../assets/01.jpg";
 import { contactInfo } from "../ContactInfo";
 
 function Hero() {
