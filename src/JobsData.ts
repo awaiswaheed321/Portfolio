@@ -10,10 +10,11 @@ export const jobs = [
       "Streamlined Walmart's headquarters-deployed software workflows with Spring Boot, Hibernate, and RESTful APIs to ensure data integrity, aiding U.S. team reviews.",
       "Oversaw Walmart's headquarters-deployed software deployments with Kubernetes and Jenkins to maintain uptime, aligning with U.S. teams.",
       "Integrated Kafka into Walmart's headquarters-deployed software for real-time messaging to optimize update sync, collaborating with U.S. product teams.",
+      "Implemented unit tests using JUnit to ensure feature reliability and reduce defects in critical pharmacy workflows.",
       "Partnered with U.S. teams via Git, Maven, and Scrum to deliver quality Walmart headquarters-deployed software on schedule."
     ],
     technologies:
-      "Java (JDK 11), Spring Boot, Hibernate, MySQL, RESTful APIs, Postman, Maven, Git, Kubernetes, Apache Kafka"
+      "Java (JDK 11), Spring Boot, Hibernate, MySQL, RESTful APIs, JUnit, Postman, Maven, Git, Kubernetes, Apache Kafka, Jenkins, AWS, React.js"
   },
   {
     title: "Software Engineer",
@@ -22,14 +23,16 @@ export const jobs = [
     location: "Islamabad, Pakistan",
     responsibilities: [
       "Developed RESTful APIs using Java, Spring Boot, and Hibernate to integrate DTAC Thailand's ERP with platforms like Coupa, reducing integration effort by 40%.",
-      "Optimized inter-service communication with Apache Kafka and AWS SQS, enhancing system stability and data exchange efficiency.",
-      "Led the RESTful API architecture design for a social media job portal using Nest.js and TypeScript, overseeing requirement gathering and strategic decisions, reducing project delivery time by 45%.",
-      "Built a secure full-cycle payment system with Stripe for the job portal, adding escrow functionality to improve transaction security and reliability.",
-      "Provided on-call support as part of the hyper-care team, resolving issues within SLA timeframes and maintaining 99.99% system uptime.",
-      "Managed and optimized Jenkins-based CI/CD pipelines, reducing deployment failures and speeding up release cycles."
+      "Implemented JUnit tests for DTAC’s ERP APIs to ensure reliability, minimizing defects in integrations.",
+      "Provided on-call support in hyper-care team, resolving issues within SLAs to maintain 99.99% uptime.",
+      "Managed and optimized Jenkins-based CI/CD pipelines to reduce deployment failures and speed up release cycles.",
+      "Led the RESTful API architecture design for a job portal using Nest.js and TypeScript, leading requirement gathering to cut delivery time by 45%.",
+      "Led backend team and developed backend and frontend modules for the job portal using Spring Boot and React.js, enhancing user experience and system performance.",
+      "Created a secure payment system with Stripe for the job portal, adding escrow to improve transaction reliability.",
+      "Integrated MongoDB for handling dynamic user-generated data within the job portal's backend."
     ],
     technologies:
-      "Java, Spring Boot, Hibernate, MySQL, RESTful APIs, Apache Kafka, AWS, Maven, Git, Nest.js, TypeScript, Swagger, Jenkins, Stripe"
+      "Java, Spring Boot, Hibernate, MySQL, MongoDB, RESTful APIs, Apache Kafka, AWS, AWS SQS, Maven, Git, Nest.js, TypeScript, Swagger, Jenkins, Stripe, React.js, JUnit"
   },
   {
     title: "Design Engineer",
