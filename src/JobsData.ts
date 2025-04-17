@@ -1,43 +1,43 @@
 export const jobs = [
   {
     title: "Senior Software Engineer",
-    company: "Confiz Limited",
-    duration: "10/2022 - 07/2024",
-    location: "Lahore, Pakistan (Remote)",
+    company: "Confiz Limited (Client: Walmart)",
+    duration: "10/2022 – 07/2024",
+    location: "Islamabad, Pakistan (Remote)",
     responsibilities: [
-      "Built a tracking system with Java, Spring Boot, Hibernate, and MySQL to monitor Walmart's headquarters-deployed pharmacy software updates across 5,000 stores, syncing with U.S. teams to enhance efficiency.",
-      "Collaborated with U.S. product teams to upgrade Walmart's headquarters-deployed pharmacy software to a cloud-based solution using React.js, Spring Boot, and AWS, managing workorder approvals and update packages (e.g., price, tax, name changes) for stores nationwide, boosting performance.",
-      "Streamlined Walmart's headquarters-deployed software workflows with Spring Boot, Hibernate, and RESTful APIs to ensure data integrity, aiding U.S. team reviews.",
-      "Oversaw Walmart's headquarters-deployed software deployments with Kubernetes and Jenkins to maintain uptime, aligning with U.S. teams.",
-      "Integrated Kafka into Walmart's headquarters-deployed software for real-time messaging to optimize update sync, collaborating with U.S. product teams.",
-      "Implemented unit tests using JUnit to ensure feature reliability and reduce defects in critical pharmacy workflows.",
-      "Partnered with U.S. teams via Git, Maven, and Scrum to deliver quality Walmart headquarters-deployed software on schedule."
+      "Developed scalable backend systems, led cross-functional teams, and drove cloud-based solution implementations for Walmart’s pharmacy software.",
+      "Built a tracking system using Java, Spring Boot, Hibernate, and MySQL to monitor software updates across 5,000+ stores, boosting efficiency for U.S. teams.",
+      "Collaborated closely with U.S. teams to migrate pharmacy software to a WCNP cloud solution using Spring Boot, React.js, AWS CICD pipelines, and RESTful APIs, streamlining workorder approvals, updates (e.g., price, tax, name changes), and data integrity for nationwide stores.",
+      "Managed deployments with Kubernetes, Jenkins, and CICD pipelines to ensure uptime and smooth rollouts across 5,000+ stores, aligning with U.S. teams.",
+      "Integrated Kafka for real-time messaging to synchronize updates efficiently, supporting U.S. product teams.",
+      "Implemented Splunk logs, dashboards, and alerts to monitor events effectively, enhancing operational reliability.",
+      "Enhanced deployment quality with SonarQube, Snyk, and automated unit/integration tests using JUnit and Mockito, ensuring robust releases with rollback capabilities."
     ],
     technologies:
-      "Java (JDK 11), Spring Boot, Hibernate, MySQL, RESTful APIs, JUnit, Postman, Maven, Git, Kubernetes, Apache Kafka, Jenkins, AWS, React.js"
+      "Java, Spring Boot, Hibernate, MySQL, RESTful APIs, Postman, Maven, Git, Kubernetes, Kafka, WCNP, Splunk, SonarQube, Snyk, JUnit, Mockito"
   },
   {
     title: "Software Engineer",
     company: "Funavry Technologies",
-    duration: "04/2021 - 09/2022",
+    duration: "04/2021 – 09/2022",
     location: "Islamabad, Pakistan",
     responsibilities: [
-      "Developed RESTful APIs using Java, Spring Boot, and Hibernate to integrate DTAC Thailand's ERP with platforms like Coupa, reducing integration effort by 40%.",
+      "Integrated ERP systems, developed microservices, and enhanced system scalability for clients like DTAC Thailand.",
+      "Built RESTful APIs with Java, Spring Boot, and Hibernate to integrate DTAC’s ERP with Coupa, cutting integration effort by 40%.",
       "Implemented JUnit tests for DTAC’s ERP APIs to ensure reliability, minimizing defects in integrations.",
       "Provided on-call support in hyper-care team, resolving issues within SLAs to maintain 99.99% uptime.",
-      "Managed and optimized Jenkins-based CI/CD pipelines to reduce deployment failures and speed up release cycles.",
-      "Led the RESTful API architecture design for a job portal using Nest.js and TypeScript, leading requirement gathering to cut delivery time by 45%.",
+      "Streamlined Jenkins-based CI/CD pipelines to minimize deployment failures and speed up release cycles.",
+      "Designed RESTful API architecture for a job portal with Nest.js and TypeScript, leading requirement gathering to cut delivery time by 45%.",
       "Led backend team and developed backend and frontend modules for the job portal using Spring Boot and React.js, enhancing user experience and system performance.",
-      "Created a secure payment system with Stripe for the job portal, adding escrow to improve transaction reliability.",
-      "Integrated MongoDB for handling dynamic user-generated data within the job portal's backend."
+      "Created a secure payment system with Stripe for the job portal, adding escrow to improve transaction reliability."
     ],
     technologies:
-      "Java, Spring Boot, Hibernate, MySQL, MongoDB, RESTful APIs, Apache Kafka, AWS, AWS SQS, Maven, Git, Nest.js, TypeScript, Swagger, Jenkins, Stripe, React.js, JUnit"
+      "Java, Spring Boot, Hibernate, MySQL, RESTful APIs, Apache Kafka, AWS, Maven, Git, Nest.js, TypeScript, Swagger, Jenkins, Stripe, React.js, JUnit"
   },
   {
     title: "Design Engineer",
     company: "CARE Pvt. Ltd.",
-    duration: "09/2019 - 03/2021",
+    duration: "09/2019 – 03/2021",
     location: "Islamabad, Pakistan",
     responsibilities: [
       "Developed multiple custom plugins for Joget Workflow using Java and Spring Boot, enhancing ERP systems with features like basic charts, GANTT charts, and file uploads, significantly improving operational efficiency.",
@@ -51,7 +51,7 @@ export const jobs = [
   {
     title: "Intern",
     company: "Bentley Systems",
-    duration: "07/2019 - 08/2019",
+    duration: "07/2019 – 08/2019",
     location: "Islamabad, Pakistan",
     responsibilities: [
       "Contributed to a company-wide initiative to synchronize local applications with proprietary cloud solutions, focusing on researching integration techniques and developing proof of concept."
