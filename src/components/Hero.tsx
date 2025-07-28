@@ -83,7 +83,7 @@ function Hero() {
               }}
             >
               <LocationOn sx={{ fontSize: 20 }} />
-              <Typography variant="body2">Fairfield, Iowa</Typography>
+              <Typography variant="body2">Chicago, IL</Typography>
             </Stack>
           </Stack>
           <Typography
