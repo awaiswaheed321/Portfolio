@@ -10,7 +10,6 @@ import personalImage from "../assets/01.jpg";
 import { contactInfo } from "../ContactInfo";
 
 function Hero() {
-
   const buttonStyle = {
     textTransform: "none",
     px: 2.5,
@@ -91,14 +90,15 @@ function Hero() {
             paragraph
             sx={{ textAlign: "justify" }}
           >
-            Software Engineer with 5 years of experience building scalable
-            backend systems and integrating third-party solutions. Skilled in
-            Java, Spring Boot, Hibernate, MySQL, and REST APIs, with additional
-            experience in Kubernetes, AWS, and Kafka. Passionate about
-            delivering high-quality, efficient software that aligns with
-            business needs.
+            Software Engineer with 5 years of experience building scalable,
+            high-performance backend systems and designing microservices and
+            distributed architectures. Skilled in REST services, data
+            persistence, and third-party integrations in retail, ERP, and social
+            domains. Proficient in Java, Spring Boot, Hibernate, MySQL, AWS,
+            Kubernetes, Kafka, and frontend with React.js and TypeScript.
+            Experienced in Agile SDLC and cross-team collaboration to deliver
+            maintainable, scalable software.
           </Typography>
-
           <Box
             sx={{
               display: "flex",
