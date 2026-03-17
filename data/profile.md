@@ -5,13 +5,13 @@
 **Name:** Awais Waheed
 **Title:** Senior Backend Engineer
 **Location:** Irving, TX
-**Tagline:** Backend Engineer · Distributed Systems · AWS · 1M+ msgs/day
+**Tagline:** Backend Engineer · Distributed Systems · AWS · Event-Driven Architecture
 
 ## Bio / Summary
 
 ### Short (hero section)
 
-Senior Backend Engineer specializing in high-throughput distributed systems and event-driven architectures. 6+ years building production systems in Java at scale — currently owning a streaming pipeline processing 1M+ messages/day at 7-Eleven's delivery platform. Deep experience with AWS, reactive programming, microservices, and cloud migrations. Previously at Walmart (5,000+ stores) via Confiz.
+Senior Backend Engineer specializing in high-throughput distributed systems and event-driven architectures. 6+ years building production systems in Java at scale — currently owning a mission-critical streaming pipeline at 7-Eleven's delivery platform. Deep experience with AWS, reactive programming, microservices, and cloud migrations. Previously at Walmart via Confiz.
 
 ### Long (full About)
 

@@ -52,7 +52,7 @@ export default function Navbar() {
     <header
       className={[
         'sticky top-0 z-50 w-full',
-        'bg-[rgba(248,249,252,0.92)] dark:bg-[rgba(15,17,23,0.92)]',
+        'bg-[rgba(229,232,240,0.92)] dark:bg-[rgba(15,17,23,0.92)]',
         'backdrop-blur-md transition-all duration-300',
         scrolled
           ? 'border-b border-[var(--border)]'

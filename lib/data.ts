@@ -136,15 +136,14 @@ export const skillGroups: SkillGroup[] = [
   {
     category: 'Frameworks & Libraries',
     skills: [
-      'Spring Boot', 'Hibernate', 'Reactor', 'Nest.js', 'React.js', 'LangChain',
-      'Apache Kafka', 'AWS Kinesis', 'AWS SQS', 'Azure Event Hub',
+      'Spring Boot', 'Hibernate', 'Reactor', 'Nest.js', 'React.js', 'LangChain', 'Apache Kafka',
     ],
   },
   {
     category: 'Cloud & Infrastructure',
     skills: [
-      'AWS', 'Azure', 'Kubernetes', 'Docker', 'Jenkins',
-      'New Relic', 'Splunk', 'SonarQube',
+      'AWS', 'Azure', 'AWS Kinesis', 'AWS SQS', 'Azure Event Hub',
+      'Kubernetes', 'Docker', 'Jenkins', 'New Relic', 'Splunk', 'SonarQube',
     ],
   },
   {

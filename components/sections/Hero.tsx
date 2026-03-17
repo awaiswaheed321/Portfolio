@@ -2,7 +2,8 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { MapPin, Download, Github, Linkedin, Mail } from 'lucide-react';
+import { MapPin, Download, Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
+import ParticleCanvas from '@/components/ui/ParticleCanvas';
 
 /* ─── Animation variants ──────────────────────────────────────────────── */
 const container = {
@@ -40,20 +41,23 @@ export default function Hero() {
   return (
     <section
       id="about"
-      className="relative py-12 md:py-20 overflow-hidden"
+      className="relative min-h-[calc(100vh-3.5rem)] md:min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
       aria-label="Introduction"
     >
-      {/* Subtle radial glow behind photo — barely perceptible */}
+      {/* Particle network background */}
+      <ParticleCanvas />
+
+      {/* Radial glow behind photo */}
       <div
         className="absolute inset-0 pointer-events-none select-none"
         aria-hidden
         style={{
           background:
-            'radial-gradient(ellipse 55% 60% at 78% 50%, color-mix(in srgb, var(--accent) 5%, transparent), transparent 70%)',
+            'radial-gradient(ellipse 55% 60% at 78% 50%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%)',
         }}
       />
 
-      <div className="relative max-w-content mx-auto px-6 md:px-8 lg:px-12">
+      <div className="relative w-full max-w-content mx-auto px-6 md:px-8 lg:px-12 py-20">
         <div className="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16 lg:gap-20">
 
           {/* ── Text ────────────────────────────────────────────── */}
@@ -110,11 +114,9 @@ export default function Hero() {
             >
               Senior Backend Engineer specializing in high-throughput distributed systems and
               event-driven architectures. 6+ years building production systems in Java at
-              scale — currently owning a streaming pipeline processing{' '}
-              <span className="text-[var(--accent)] font-semibold">1M+ messages/day</span>{' '}
-              at 7-Eleven&apos;s delivery platform. Deep experience with AWS, reactive
-              programming, microservices, and cloud migrations. Previously at Walmart
-              (5,000+ stores) via Confiz.
+              scale — currently owning a mission-critical streaming pipeline at 7-Eleven&apos;s
+              delivery platform. Deep experience with AWS, reactive programming, microservices,
+              and cloud migrations. Previously at Walmart via Confiz.
             </motion.p>
 
             {/* CTA buttons */}
@@ -157,7 +159,7 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ── Photo ───────────────────────────────────────────── */}
+          {/* ── Photo (pop-out) ──────────────────────────────── */}
           <motion.div
             className="flex-shrink-0"
             variants={photoVariant}
@@ -165,26 +167,86 @@ export default function Hero() {
             animate="visible"
           >
             {/*
-              Ring: 2px solid var(--accent) with 4px offset per DESIGN.md.
-              Using Tailwind arbitrary property to keep CSS-variable-based styling.
+              Pop-out technique:
+              Container is ~25% taller than the octagon.
+              The photo fills the tall container — face sits in the overflow zone
+              above the octagon top edge.
+              A gradient mask fades out the sky so only the person is visible.
+              The octagon border + glow frames the lower 78% of the container.
             */}
-            <div
-              className="w-[120px] h-[120px] md:w-[180px] md:h-[180px] rounded-full
-                         [outline:2px_solid_var(--accent)] [outline-offset:4px]"
-            >
-              <Image
-                src="/profile.jpg"
-                alt="Awais Waheed, Senior Backend Engineer"
-                width={180}
-                height={180}
-                priority
-                className="rounded-full object-cover w-full h-full"
-              />
+            <div className="relative w-[220px] md:w-[280px]">
+
+              {/* Photo layer — tall, clipped to "rectangle top + octagon bottom" shape */}
+              <div
+                className="relative w-full h-[280px] md:h-[360px]"
+                style={{
+                  clipPath: 'polygon(0% 0%, 100% 0%, 100% 78%, 70.7% 100%, 29.3% 100%, 0% 78%)',
+                  WebkitMaskImage:
+                    'linear-gradient(to bottom, transparent 0%, black 22%)',
+                  maskImage:
+                    'linear-gradient(to bottom, transparent 0%, black 22%)',
+                }}
+              >
+                <Image
+                  src="/profile.jpg"
+                  alt="Awais Waheed, Senior Backend Engineer"
+                  fill
+                  priority
+                  className="object-cover object-[center_45%]"
+                />
+              </div>
+
+              {/* Octagon glow + border — bottom 78% of container */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-[78%] pointer-events-none"
+                style={{
+                  filter:
+                    'drop-shadow(0 0 16px var(--photo-glow)) drop-shadow(0 0 50px var(--photo-glow-soft))',
+                }}
+              >
+                <svg
+                  className="w-full h-full"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  aria-hidden
+                >
+                  {/* Open polyline — sides + bottom only, no top edge above the head */}
+                  <polyline
+                    points="0,29.3 0,70.7 29.3,100 70.7,100 100,70.7 100,29.3"
+                    fill="none"
+                    stroke="var(--accent)"
+                    strokeWidth="2"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
+              </div>
+
             </div>
           </motion.div>
 
         </div>
       </div>
+
+      {/* ── Scroll indicator ──────────────────────────────────── */}
+      <motion.a
+        href="#experience"
+        aria-label="Scroll to experience"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2
+                   flex flex-col items-center gap-1.5 cursor-pointer
+                   text-[var(--text-muted)] hover:text-[var(--accent)]
+                   transition-colors duration-150"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.8, duration: 0.6 }}
+      >
+        <span className="text-[10px] tracking-[0.15em] uppercase">scroll</span>
+        <motion.div
+          animate={{ y: [0, 5, 0] }}
+          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+        >
+          <ChevronDown size={16} strokeWidth={2} aria-hidden />
+        </motion.div>
+      </motion.a>
     </section>
   );
 }

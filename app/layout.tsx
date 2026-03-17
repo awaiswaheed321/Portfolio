@@ -9,16 +9,22 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'Awais Waheed — Senior Backend Engineer',
   description:
-    'Senior Backend Engineer with 6+ years building high-throughput distributed systems and event-driven architectures. Currently processing 1M+ messages/day at 7-Eleven\'s delivery platform.',
+    'Senior Backend Engineer with 6+ years building high-throughput distributed systems, event-driven architectures, and production microservices in Java on AWS.',
   keywords: [
-    'Backend Engineer',
-    'Java',
-    'Spring Boot',
-    'AWS',
-    'Distributed Systems',
-    'Microservices',
-    'Awais Waheed',
+    'Backend Engineer', 'Java', 'Spring Boot', 'AWS',
+    'Distributed Systems', 'Microservices', 'Awais Waheed',
   ],
+  openGraph: {
+    title: 'Awais Waheed — Senior Backend Engineer',
+    description: 'Senior Backend Engineer specializing in distributed systems, AWS, and event-driven architectures.',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Awais Waheed — Senior Backend Engineer',
+    description: 'Senior Backend Engineer specializing in distributed systems, AWS, and event-driven architectures.',
+  },
 };
 
 export default function RootLayout({

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, MapPin, Wifi } from 'lucide-react';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -26,9 +26,23 @@ const cardVariants = {
 export default function Experience() {
   // Most recent role expanded by default
   const [expandedIndex, setExpandedIndex] = useState<number>(0);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  const toggle = (i: number) =>
-    setExpandedIndex((prev) => (prev === i ? -1 : i));
+  const toggle = (i: number) => {
+    setExpandedIndex((prev) => {
+      const next = prev === i ? -1 : i;
+      if (next !== -1) {
+        setTimeout(() => {
+          const el = cardRefs.current[i];
+          if (el) {
+            const top = el.getBoundingClientRect().top + window.scrollY - 88;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }, 320);
+      }
+      return next;
+    });
+  };
 
   return (
     <section
@@ -73,6 +87,7 @@ export default function Experience() {
                   key={i}
                   variants={cardVariants}
                   className="relative pl-8"
+                  ref={(el) => { cardRefs.current[i] = el as HTMLDivElement | null; }}
                 >
                   {/* Timeline dot */}
                   <div

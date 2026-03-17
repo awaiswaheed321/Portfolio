@@ -1,8 +1,59 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import {
+  SiTypescript, SiPython, SiCplusplus, SiDotnet,
+  SiSpringboot, SiHibernate, SiNestjs, SiReact, SiLangchain, SiApachekafka,
+  SiKubernetes, SiDocker, SiJenkins, SiNewrelic, SiSplunk, SiSonarqubeserver,
+  SiMongodb, SiMysql, SiPostgresql,
+  SiApachemaven, SiGit, SiPostman, SiLiquibase, SiJira, SiGithubcopilot, SiClaude,
+  SiJunit5,
+} from 'react-icons/si';
+import { FaJava, FaAws } from 'react-icons/fa';
+import type { IconType } from 'react-icons';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { skillGroups } from '@/lib/data';
+
+/* ─── Icon map ────────────────────────────────────────────────────────── */
+const skillIcons: Record<string, IconType> = {
+  // Languages
+  'Java':             FaJava,
+  'TypeScript':       SiTypescript,
+  'Python':           SiPython,
+  'C++':              SiCplusplus,
+  'C#/.NET':          SiDotnet,
+  // Frameworks & Libraries
+  'Spring Boot':      SiSpringboot,
+  'Hibernate':        SiHibernate,
+  'Nest.js':          SiNestjs,
+  'React.js':         SiReact,
+  'LangChain':        SiLangchain,
+  'Apache Kafka':     SiApachekafka,
+  'AWS Kinesis':      FaAws,
+  'AWS SQS':          FaAws,
+  // Cloud & Infrastructure
+  'AWS':              FaAws,
+  'Kubernetes':       SiKubernetes,
+  'Docker':           SiDocker,
+  'Jenkins':          SiJenkins,
+  'New Relic':        SiNewrelic,
+  'Splunk':           SiSplunk,
+  'SonarQube':        SiSonarqubeserver,
+  // Databases
+  'MongoDB':          SiMongodb,
+  'MySQL':            SiMysql,
+  'PostgreSQL':       SiPostgresql,
+  'Amazon RDS':       FaAws,
+  // Tools
+  'JUnit':            SiJunit5,
+  'Maven':            SiApachemaven,
+  'Git':              SiGit,
+  'Postman':          SiPostman,
+  'Liquibase':        SiLiquibase,
+  'JIRA':             SiJira,
+  'GitHub Copilot':   SiGithubcopilot,
+  'Claude Code':      SiClaude,
+};
 
 /* ─── Animation variants ──────────────────────────────────────────────── */
 const sectionVariants = {
@@ -77,19 +128,30 @@ export default function Skills() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-60px' }}
               >
-                {skills.map((skill) => (
-                  <motion.span
-                    key={skill}
-                    variants={badgeVariants}
-                    className="px-3 py-1.5 text-sm font-medium rounded-badge
-                               bg-[var(--bg-tertiary)] border border-[var(--border)]
-                               text-[var(--text-secondary)]
-                               hover:border-[var(--accent)] hover:text-[var(--accent)]
-                               transition-colors duration-150 cursor-default"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
+                {skills.map((skill) => {
+                  const Icon = skillIcons[skill];
+                  return (
+                    <motion.span
+                      key={skill}
+                      variants={badgeVariants}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5
+                                 text-sm font-medium rounded-badge
+                                 bg-[var(--bg-tertiary)] border border-[var(--border)]
+                                 text-[var(--text-secondary)]
+                                 hover:border-[var(--accent)] hover:text-[var(--accent)]
+                                 transition-colors duration-150 cursor-default"
+                    >
+                      {Icon && (
+                        <Icon
+                          size={13}
+                          aria-hidden
+                          className="flex-shrink-0 opacity-75"
+                        />
+                      )}
+                      {skill}
+                    </motion.span>
+                  );
+                })}
               </motion.div>
             </motion.div>
           ))}

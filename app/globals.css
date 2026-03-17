@@ -4,19 +4,21 @@
 
 /* ─── Light mode (default) ─────────────────────────────────────────── */
 :root {
-  --bg-primary:    #F8F9FC;
-  --bg-secondary:  #FFFFFF;
-  --bg-tertiary:   #EEF0F6;
+  --bg-primary:    #E5E8F0;
+  --bg-secondary:  #EDF0F7;
+  --bg-tertiary:   #D8DCE8;
   --text-primary:  #0F1117;
-  --text-secondary:#5A6072;
-  --text-muted:    #8B92A9;
+  --text-secondary:#4A5268;
+  --text-muted:    #7A82A0;
   --accent:        #0D9488;
   --accent-hover:  #0F766E;
-  --accent-subtle: #CCFBF1;
-  --border:        #E2E5EF;
-  --border-subtle: #F0F2F8;
-  --shadow:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
-  --shadow-md:     0 4px 12px rgba(0,0,0,0.08);
+  --accent-subtle: #B2EFE8;
+  --border:        #C8CEDF;
+  --border-subtle: #D8DCE8;
+  --shadow:        0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:     0 4px 12px rgba(0,0,0,0.10);
+  --photo-glow:    rgba(13,148,136,0.75);
+  --photo-glow-soft: rgba(13,148,136,0.25);
 }
 
 /* ─── Dark mode ─────────────────────────────────────────────────────── */
@@ -34,6 +36,8 @@
   --border-subtle: #1E2130;
   --shadow:        0 1px 3px rgba(0,0,0,0.3);
   --shadow-md:     0 4px 12px rgba(0,0,0,0.4);
+  --photo-glow:    rgba(45,212,191,0.85);
+  --photo-glow-soft: rgba(45,212,191,0.3);
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────── */

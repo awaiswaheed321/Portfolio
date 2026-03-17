@@ -62,9 +62,25 @@ export default function Projects() {
                          transition-colors duration-200"
             >
               {/* Context label */}
-              <p className="text-xs font-medium text-[var(--text-muted)] mb-2 tracking-wide">
-                {project.context}
-              </p>
+              <div className="flex items-center gap-2 mb-2">
+                <p className="text-xs font-medium text-[var(--text-muted)] tracking-wide">
+                  {project.context}
+                </p>
+                {project.context === 'Personal Project' ? (
+                  <span className="px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase
+                                   rounded bg-[var(--bg-tertiary)] border border-[var(--border)]
+                                   text-[var(--text-muted)]">
+                    Personal
+                  </span>
+                ) : (
+                  <span className="px-1.5 py-0.5 text-[10px] font-semibold tracking-wide uppercase
+                                   rounded bg-[color-mix(in_srgb,var(--accent)_12%,transparent)]
+                                   border border-[color-mix(in_srgb,var(--accent)_30%,transparent)]
+                                   text-[var(--accent)]">
+                    Professional
+                  </span>
+                )}
+              </div>
 
               {/* Title */}
               <h3 className="text-xl font-semibold text-[var(--text-primary)] mb-3 leading-snug">
