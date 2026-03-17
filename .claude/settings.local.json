@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(curl:*)",
+      "Bash(cd:*)",
+      "Bash(npm audit:*)",
+      "Bash(npm view:*)",
+      "Bash(node -e \"const v=require\\(''''fs''''\\).readFileSync\\(''''/dev/stdin'''',''''utf8''''\\); const versions=JSON.parse\\(v\\); console.log\\(versions.filter\\(v=>v.startsWith\\(''''15.''''\\)\\).slice\\(-10\\).join\\(''''\\\\n''''\\)\\)\")",
+      "Bash(node -e \"const v=JSON.parse\\(require\\(''''fs''''\\).readFileSync\\(''''/dev/stdin'''',''''utf8''''\\)\\); console.log\\(v.slice\\(-8\\).join\\(''''\\\\n''''\\)\\)\")",
+      "Bash(node -e \":*)",
+      "Bash(grep -v \"^$\")"
+    ]
+  }
+}

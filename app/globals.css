@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Light mode (default) ─────────────────────────────────────────── */
+:root {
+  --bg-primary:    #E5E8F0;
+  --bg-secondary:  #EDF0F7;
+  --bg-tertiary:   #D8DCE8;
+  --text-primary:  #0F1117;
+  --text-secondary:#4A5268;
+  --text-muted:    #7A82A0;
+  --accent:        #0D9488;
+  --accent-hover:  #0F766E;
+  --accent-subtle: #B2EFE8;
+  --border:        #C8CEDF;
+  --border-subtle: #D8DCE8;
+  --shadow:        0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:     0 4px 12px rgba(0,0,0,0.10);
+  --photo-glow:    rgba(13,148,136,0.75);
+  --photo-glow-soft: rgba(13,148,136,0.25);
+}
+
+/* ─── Dark mode ─────────────────────────────────────────────────────── */
+.dark {
+  --bg-primary:    #0F1117;
+  --bg-secondary:  #1A1D27;
+  --bg-tertiary:   #22263A;
+  --text-primary:  #F0F2F8;
+  --text-secondary:#8B92A9;
+  --text-muted:    #5A6072;
+  --accent:        #2DD4BF;
+  --accent-hover:  #14B8A6;
+  --accent-subtle: #0D2D2A;
+  --border:        #2A2E3F;
+  --border-subtle: #1E2130;
+  --shadow:        0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md:     0 4px 12px rgba(0,0,0,0.4);
+  --photo-glow:    rgba(45,212,191,0.85);
+  --photo-glow-soft: rgba(45,212,191,0.3);
+}
+
+/* ─── Base ──────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* account for sticky navbar */
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ─── Focus rings ───────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ─── Selection ─────────────────────────────────────────────────────── */
+::selection {
+  background-color: var(--accent-subtle);
+  color: var(--text-primary);
+}
