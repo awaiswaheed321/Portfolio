@@ -1,44 +1,31 @@
-interface SectionHeadingProps {
-  /** e.g. "02 / EXPERIENCE" */
-  label: string;
-  /** e.g. "Work Experience" */
-  title: string;
-  /** Optional one-liner below the title */
-  description?: string;
-}
+import Reveal from './Reveal';
 
+/**
+ * Mono telemetry label + display heading. `index` is the section's
+ * position in the page (01 … 05).
+ */
 export default function SectionHeading({
-  label,
+  index,
   title,
   description,
-}: SectionHeadingProps) {
+}: {
+  index: string;
+  title: string;
+  description?: string;
+}) {
   return (
-    <div className="mb-12">
-      {/* Numbered accent label */}
-      <p
-        className="text-xs font-semibold tracking-[0.1em] uppercase
-                   text-[var(--accent)] mb-3"
-      >
-        {label}
+    <Reveal className="mb-12 md:mb-14">
+      <p className="font-mono text-xs uppercase tracking-[0.22em] text-volt mb-4">
+        <span aria-hidden className="mr-3 inline-block h-px w-6 bg-volt align-middle" />
+        {index} · {title}
       </p>
-
-      {/* Main heading */}
-      <h2
-        className="text-3xl font-bold tracking-tight
-                   text-[var(--text-primary)]"
-      >
+      <h2 className="font-display font-semibold text-ink tracking-[-0.015em] leading-[1.15]
+                     text-[clamp(1.8rem,3.8vw,2.6rem)]">
         {title}
       </h2>
-
-      {/* Optional descriptor */}
       {description && (
-        <p className="mt-2 text-sm text-[var(--text-secondary)] max-w-xl">
-          {description}
-        </p>
+        <p className="mt-3 text-fog text-[15px] max-w-[58ch]">{description}</p>
       )}
-
-      {/* Teal accent bar */}
-      <div className="mt-3 w-10 h-[3px] bg-[var(--accent)] rounded-full" />
-    </div>
+    </Reveal>
   );
 }

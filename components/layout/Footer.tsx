@@ -1,41 +1,40 @@
-import { Github, Linkedin } from 'lucide-react';
-
-const YEAR = new Date().getFullYear();
+import { contact } from '@/lib/data';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] py-8">
-      <div
-        className="max-w-content mx-auto px-6 md:px-8 lg:px-12
-                   flex flex-col sm:flex-row items-center justify-between gap-4"
-      >
-        <p className="text-sm text-[var(--text-muted)]">
-          © {YEAR} Awais Waheed
-        </p>
-
-        <div className="flex items-center gap-4">
-          <a
-            href="https://github.com/awaiswaheed321"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub profile"
-            className="text-[var(--text-muted)] hover:text-[var(--accent)]
-                       transition-colors duration-150
-                       focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded"
-          >
-            <Github size={18} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/awaiswaheed96/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn profile"
-            className="text-[var(--text-muted)] hover:text-[var(--accent)]
-                       transition-colors duration-150
-                       focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded"
-          >
-            <Linkedin size={18} />
-          </a>
+    <footer className="border-t border-line-faint">
+      <div className="mx-auto max-w-content px-6 md:px-10 lg:px-12 py-10">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <p className="font-mono text-xs text-mist">
+            © {new Date().getFullYear()} Awais Waheed · Irving, TX
+          </p>
+          <p aria-hidden className="font-mono text-xs text-mist select-none">
+            {'// end of trace'}
+          </p>
+          <nav aria-label="Footer" className="flex items-center gap-5">
+            <a
+              href={contact.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-mist hover:text-volt transition-colors duration-200"
+            >
+              GitHub
+            </a>
+            <a
+              href={contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs text-mist hover:text-volt transition-colors duration-200"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={`mailto:${contact.email}`}
+              className="font-mono text-xs text-mist hover:text-volt transition-colors duration-200"
+            >
+              Email
+            </a>
+          </nav>
         </div>
       </div>
     </footer>

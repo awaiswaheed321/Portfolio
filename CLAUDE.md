@@ -2,49 +2,54 @@
 
 This file is the single source of truth for all development decisions on this project.
 Read it fully at the start of every session before writing any code.
+All **visual** decisions live in `DESIGN.md` — read that before touching any UI.
 
 ---
 
 ## Project Overview
 
 Personal portfolio website for **Awais Waheed**, Senior Backend Engineer.
-Full rewrite from React + Vite to **Next.js 14 (App Router) + Tailwind CSS**.
-Deployed via **GitHub Actions to GitHub Pages** with a custom domain (CNAME).
+**Next.js 16 (App Router) + Tailwind CSS**, statically exported and deployed
+via **GitHub Actions to GitHub Pages** with a custom domain (CNAME → awaiswaheed.net).
 
-Target audience: hiring managers, technical leads, and recruiters in the software engineering space.
-The site should feel polished, confident, and technical — not flashy or gimmicky.
+Target audience: hiring managers, technical leads, and recruiters.
+Design concept ("Observability"), palette, and motion rules: see `DESIGN.md`.
+Light **and** dark mode, both first-class; OS preference respected, manual
+toggle persisted in `localStorage.theme`.
 
 ---
 
 ## Tech Stack
 
-| Layer       | Choice                          |
-|-------------|----------------------------------|
-| Framework   | Next.js 14 (App Router)          |
-| Styling     | Tailwind CSS                     |
-| Animations  | Framer Motion (subtle, purposeful)|
-| Font        | Geist (Next.js native, fast)     |
-| Icons       | Lucide React                     |
-| Deployment  | GitHub Pages (static export)     |
+| Layer      | Choice                                              |
+|------------|------------------------------------------------------|
+| Framework  | Next.js 16 (App Router, static export)               |
+| Styling    | Tailwind CSS 3 + CSS variable tokens (`darkMode: 'class'`) |
+| Theming    | Hand-rolled: pre-paint inline script + stateless `ThemeToggle` — **no next-themes** |
+| Animations | Hand-rolled CSS + IntersectionObserver `Reveal` — **no animation library** |
+| Fonts      | Bricolage Grotesque (display, `next/font/google`) + Geist Sans/Mono (`geist` package) |
+| Icons      | Inline SVGs in `components/ui/Icons.tsx` — **no icon library** |
+| Deployment | GitHub Pages (static export)                          |
+
+Runtime dependencies are exactly: `next`, `react`, `react-dom`, `geist`.
+Do not add UI kits, animation libraries, icon packages, or theme libraries.
 
 **Next.js config requirements:**
-- `output: 'export'` in `next.config.js` (static site generation)
-- `images: { unoptimized: true }` (required for static export)
-- Build output goes to `out/` directory
-- CNAME file must be copied into `out/` during build
+- `output: 'export'` in `next.config.mjs`
+- `images: { unoptimized: true }`
+- Build output goes to `out/`
+- CNAME is in `public/` (auto-copied) and the workflow also copies it explicitly
 
 ---
 
 ## GitHub Actions Pipeline
 
-The existing pipeline deploys to GitHub Pages on every push to `main`.
-The workflow must be updated to:
-- Run `npm run build` which outputs to `out/`
-- Copy `CNAME` to `out/` before uploading artifact
-- Upload `out/` instead of `dist/`
-- Everything else (permissions, concurrency, deploy steps) stays the same
+`.github/workflows/deploy.yaml` deploys to GitHub Pages on every push to `main`:
+`npm ci` → `npm run build` (outputs `out/`) → copy `public/CNAME` into `out/` →
+upload `out/` → deploy. Node 22.
 
-Never remove or restructure the GitHub Actions workflow — just update paths from `dist` to `out`.
+Never remove or restructure the workflow. If the build changes, update paths
+and versions only.
 
 ---
 
@@ -52,79 +57,33 @@ Never remove or restructure the GitHub Actions workflow — just update paths fr
 
 All content lives in these files. Never hardcode content that conflicts with them:
 
-- `data/experience.md` — work experience entries (most recent role included here)
-- `data/profile.md` — bio, summary, personal details, skills
-- `data/projects.md` — university and personal projects
+- `data/experience.md` — work experience entries
+- `data/profile.md` — bio, summary, personal details, skills, education
+- `data/projects.md` — work and personal projects
 
-If these files exist, read them and use their data verbatim.
-If they don't exist yet, scaffold them as part of setup and populate from the existing site.
+`lib/data.ts` mirrors these files as typed structures the components consume.
+**Update the markdown and `lib/data.ts` together.**
 
-> Content should be extracted from the existing React/Vite components during migration.
-> Do not invent or summarize content — copy it exactly.
-
----
-
-## Design System
-
-### Philosophy
-Refined minimalism with strong typographic hierarchy. The design should feel like it was
-crafted by an engineer who has taste — not over-designed, not under-designed.
-One dominant accent color, generous whitespace, subtle depth.
-
-### Color Palette
-
-```css
-/* Dark mode (default preference) */
---bg-primary: #0F1117       /* Near-black, slightly blue-tinted */
---bg-secondary: #1A1D27     /* Card/section backgrounds */
---bg-tertiary: #22263A      /* Hover states, subtle borders */
---text-primary: #F0F2F8     /* Near-white body text */
---text-secondary: #8B92A9   /* Muted labels, metadata */
---accent: #2DD4BF           /* Teal — primary accent */
---accent-hover: #14B8A6     /* Teal darker on hover */
---border: #2A2E3F           /* Subtle borders */
-
-/* Light mode */
---bg-primary: #F8F9FC       /* Off-white, not pure white */
---bg-secondary: #FFFFFF     /* Cards */
---bg-tertiary: #EEF0F6      /* Hover states */
---text-primary: #0F1117     /* Near-black */
---text-secondary: #5A6072   /* Muted */
---accent: #0D9488           /* Teal, slightly darker for light bg contrast */
---accent-hover: #0F766E
---border: #E2E5EF
-```
-
-### Typography
-- **Font**: Geist Sans (`next/font/google` or `next/font/local`)
-- **Headings**: font-weight 600-700, tight tracking
-- **Body**: font-weight 400, relaxed line-height (1.6-1.7)
-- **Code/tech terms**: Geist Mono for inline code snippets
-
-### Spacing
-- Section padding: `py-20` (desktop), `py-12` (mobile)
-- Max content width: `max-w-5xl mx-auto px-6`
-- Card gap: `gap-6`
-
-### Animations (Framer Motion)
-- Fade + slide up on scroll entry for sections (`y: 20 -> 0, opacity: 0 -> 1`)
-- Duration: 0.4s, ease: `easeOut`
-- Stagger children: 0.1s delay between items
-- Hover on cards: subtle `y: -2` lift + border color transition
-- Mode toggle: smooth color transition via CSS `transition: background 0.3s`
-- NO parallax, NO heavy scroll effects, NO auto-playing anything
+> Do not invent or embellish content. The 7-Eleven pipeline is **not**
+> "mission-critical" — it is the event stream powering analytics and
+> debugging (owner's correction, June 2026). Do not reintroduce the phrase.
 
 ---
 
-## Site Sections (in order)
+## Site Structure (in order)
 
-1. **Navbar** — name/logo left, nav links right, dark/light toggle, sticky + blur backdrop
-2. **Hero** — name, title, location, short bio, CTA buttons (Download CV, GitHub, LinkedIn, Email)
-3. **Experience** — timeline layout, expandable cards, company + role + dates + bullets
-4. **Skills** — grouped by category (Languages, Frameworks, Cloud/Infra, Tools), badge style
-5. **Projects** — card grid, each with title, description, tech stack tags, optional GitHub link
-6. **Contact** — simple section with email + LinkedIn + GitHub links, no form needed
-7. **Footer** — minimal, copyright, links
+1. **Navbar** — display-face wordmark; mono section links, Résumé button,
+   theme toggle; fixed, gains blur/background only after scroll. No hamburger.
+2. **Hero** — status line, mono kicker, craft-statement headline with one
+   volt-gradient phrase, bio, CTAs, pulse trace. Blueprint grid texture.
+   **No stats row** — numbers live in the experience bullets.
+3. **Experience** (`01`) — hairline rows with a volt left border on the open
+   entry; first role expanded, others behind an accessible Details toggle.
+4. **Education** (`02`) — two hairline rows.
+5. **Skills / Toolchain** (`03`) — ledger rows.
+6. **Projects / Selected Work** (`04`) — editorial index rows, no cards.
+7. **Contact** (`05`) — color photo, gradient statement, email link. No form.
+8. **Footer** — copyright · `// end of trace` · links.
 
 ---
 
@@ -132,61 +91,49 @@ One dominant accent color, generous whitespace, subtle depth.
 
 ```
 app/
-  layout.tsx          # Root layout, font, ThemeProvider
-  page.tsx            # Assembles all sections
-  globals.css         # Tailwind base + CSS variables
+  layout.tsx          # Fonts, metadata, theme+js pre-paint script (html has
+                      # suppressHydrationWarning for it)
+  page.tsx            # Sections, plain stack
+  globals.css         # Both theme token sets, grid, pulse, reveal/rise, reduced-motion
+  icon.svg            # Favicon (pulse blip)
 
 components/
-  layout/
-    Navbar.tsx
-    Footer.tsx
-  sections/
-    Hero.tsx
-    Experience.tsx
-    Skills.tsx
-    Projects.tsx
-    Contact.tsx
-  ui/
-    ThemeToggle.tsx
-    Badge.tsx
-    Card.tsx
-    SectionHeading.tsx
+  layout/Navbar.tsx   Footer.tsx
+  sections/Hero.tsx   Experience.tsx  ExperienceItem.tsx  Education.tsx
+           Skills.tsx Projects.tsx    Contact.tsx
+  ui/Reveal.tsx       # IntersectionObserver scroll reveal
+     PulseLine.tsx    # Oscilloscope trace (signature element)
+     ThemeToggle.tsx  # Stateless, CSS-driven icon swap
+     SectionHeading.tsx
+     Icons.tsx        # All inline SVG icons
 
-data/
-  experience.md
-  profile.md
-  projects.md
-
-public/
-  profile.jpg         # Profile photo
-  CNAME               # Custom domain — must not be deleted
+data/                 # Content source of truth (markdown)
+lib/data.ts           # Typed mirror of data/*.md
+public/               # CNAME, og.png, profile.jpg, resume PDF, robots, sitemap
 ```
-
----
-
-## Theme Toggle
-
-- Use `next-themes` library for dark/light mode
-- Default to `dark` system preference, respect OS setting
-- Toggle button in navbar — sun/moon icon from Lucide
-- No flash of unstyled content (FOUC) — use `suppressHydrationWarning` on `<html>`
-- Tailwind dark mode strategy: `class` (set in `tailwind.config.js`)
 
 ---
 
 ## DO NOTs
 
-- Do NOT use `purple`, `violet`, or gradient-heavy hero backgrounds
+- Do NOT add `next-themes` — theming is hand-rolled and hydration-safe
+- Do NOT add animation/icon/UI libraries — CSS + inline SVG only
+- Do NOT use gold/amber or teal — volt blue (`--volt`) is the only accent
+- Do NOT use `text-white` on volt fills — use `text-ground` (theme-adaptive)
+- Do NOT add badge pills or icon-topped card grids — hairline rows only
+- Do NOT call the 7-Eleven pipeline "mission-critical"
+- Do NOT lead the hero with throughput numbers or add a stats row
 - Do NOT add lorem ipsum or placeholder content anywhere
-- Do NOT change the CNAME file or remove it from the build output
-- Do NOT use `next/image` with remote URLs without adding domains to config
+- Do NOT change or delete the CNAME file
+- Do NOT replace `public/og.png` with a permanent `opengraph-image.tsx`
+  (GitHub Pages serves it with the wrong MIME type — see DESIGN.md to regenerate)
 - Do NOT add a contact form — links only
 - Do NOT add a blog section
-- Do NOT use `pages/` router — App Router only
-- Do NOT use inline styles — Tailwind classes only (except CSS variables in globals.css)
+- Do NOT use the `pages/` router — App Router only
 - Do NOT add Google Analytics or any tracking scripts
 - Do NOT break the GitHub Actions pipeline — update it, never remove it
-- Do NOT invent work experience, skills, or project details
+- Do NOT invent work experience, skills, metrics, or project details
+- Do NOT animate the hero h1/bio from `opacity: 0` — it destroys LCP (use `hero-rise-solid`)
 
 ---
 
@@ -195,7 +142,7 @@ public/
 ```bash
 npm run dev       # Local dev server
 npm run build     # Static export to out/
-npm run lint      # ESLint
+npm run lint      # ESLint (flat config — `next lint` no longer exists)
 ```
 
 ---
@@ -203,8 +150,9 @@ npm run lint      # ESLint
 ## Deployment Checklist (run before pushing to main)
 
 - [ ] `npm run build` completes without errors
-- [ ] `out/` directory exists and contains `index.html`
-- [ ] `CNAME` file is present in `out/`
-- [ ] Dark/light toggle works without FOUC
-- [ ] Site is responsive at 375px, 768px, 1280px
-- [ ] No console errors in production build
+- [ ] `out/` contains `index.html`, `og.png`, `CNAME` (after workflow copy step)
+- [ ] No horizontal overflow at 375px, 768px, 1440px (`scrollWidth` check)
+- [ ] Both themes checked at those widths; toggle persists across reload
+- [ ] Lighthouse ≥ 95 performance, 100 a11y/best-practices/SEO (gzip server)
+- [ ] No console errors (including hydration) in production build
+- [ ] Reduced-motion: content visible instantly, pulse trace static

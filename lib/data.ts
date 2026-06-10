@@ -215,10 +215,50 @@ export const projects: Project[] = [
   },
 ];
 
+/* ─── Education ──────────────────────────────────────────────────────── */
+
+export interface EducationEntry {
+  degree: string;
+  school: string;
+  location: string;
+  years: string;
+}
+
+export const education: EducationEntry[] = [
+  {
+    degree: 'Master of Science, Computer Science',
+    school: 'Maharishi International University',
+    location: 'Fairfield, IA',
+    years: '2024 – Present · Expected Apr 2027',
+  },
+  {
+    degree: 'Bachelor of Science, Computer Sciences',
+    school: 'SEECS, NUST',
+    location: 'Islamabad, Pakistan',
+    years: '2015 – 2019',
+  },
+];
+
+/* ─── Hero telemetry — every number is sourced from experience.md ────── */
+
+export interface Stat {
+  value: string;
+  label: string;
+}
+
+export const stats: Stat[] = [
+  { value: '1M+',    label: 'messages/day · current pipeline' },
+  { value: '5,000+', label: 'U.S. stores · Walmart rollout' },
+  { value: '6+',     label: 'years · production Java at scale' },
+];
+
 /* ─── Contact ────────────────────────────────────────────────────────── */
 
 export const contact = {
   email:    'awaiswaheed.work@gmail.com',
   github:   'https://github.com/awaiswaheed321',
   linkedin: 'https://www.linkedin.com/in/awaiswaheed96/',
+  resume:   '/AwaisWaheed_Resume.pdf',
 };
+
+export const siteUrl = 'https://awaiswaheed.net';

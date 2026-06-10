@@ -2,75 +2,192 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Light mode (default) ─────────────────────────────────────────── */
+/* ─── Design tokens — "observability lab", light + dark ─────────────────
+   ink   = text   ·  ground = page  ·  volt = the one electric accent
+   Tailwind alpha modifiers do NOT work on these vars — add explicit
+   tokens (like --volt-soft) instead. */
+
 :root {
-  --bg-primary:    #E5E8F0;
-  --bg-secondary:  #EDF0F7;
-  --bg-tertiary:   #D8DCE8;
-  --text-primary:  #0F1117;
-  --text-secondary:#4A5268;
-  --text-muted:    #7A82A0;
-  --accent:        #0D9488;
-  --accent-hover:  #0F766E;
-  --accent-subtle: #B2EFE8;
-  --border:        #C8CEDF;
-  --border-subtle: #D8DCE8;
-  --shadow:        0 1px 3px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.06);
-  --shadow-md:     0 4px 12px rgba(0,0,0,0.10);
-  --photo-glow:    rgba(13,148,136,0.75);
-  --photo-glow-soft: rgba(13,148,136,0.25);
+  color-scheme: light;
+
+  --ground:      #F5F7FC;  /* page */
+  --surface:     #FFFFFF;  /* raised panels */
+  --surface-2:   #EDF0F8;  /* hover surfaces */
+  --line:        #D9DEEC;  /* hairlines */
+  --line-faint:  #E7EAF4;  /* sub-hairlines */
+  --ink:         #141823;  /* primary text */
+  --fog:         #4E586E;  /* secondary text */
+  --mist:        #626E89;  /* tertiary / metadata — keep ≥4.5:1 on ground */
+  --volt:        #2E55E8;  /* electric blue */
+  --volt-strong: #1E40D8;  /* hover (darker on light) */
+  --volt-arc:    #6D3FE0;  /* gradient end — indigo */
+  --volt-soft:   rgba(46, 85, 232, 0.45);
+  --volt-dim:    rgba(46, 85, 232, 0.10);
+  --ok:          #15803D;  /* status dot only */
+  --grid:        rgba(46, 85, 232, 0.07);   /* blueprint grid lines */
+  --cta-glow:    0 4px 20px rgba(46, 85, 232, 0.25);
+  --pulse-glow:  drop-shadow(0 0 5px rgba(46, 85, 232, 0.5));
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* ─── Dark mode ─────────────────────────────────────────────────────── */
 .dark {
-  --bg-primary:    #0F1117;
-  --bg-secondary:  #1A1D27;
-  --bg-tertiary:   #22263A;
-  --text-primary:  #F0F2F8;
-  --text-secondary:#8B92A9;
-  --text-muted:    #5A6072;
-  --accent:        #2DD4BF;
-  --accent-hover:  #14B8A6;
-  --accent-subtle: #0D2D2A;
-  --border:        #2A2E3F;
-  --border-subtle: #1E2130;
-  --shadow:        0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md:     0 4px 12px rgba(0,0,0,0.4);
-  --photo-glow:    rgba(45,212,191,0.85);
-  --photo-glow-soft: rgba(45,212,191,0.3);
+  color-scheme: dark;
+
+  --ground:      #0B0D15;
+  --surface:     #11141F;
+  --surface-2:   #161A28;
+  --line:        #212740;
+  --line-faint:  #171C2C;
+  --ink:         #ECEFF8;
+  --fog:         #9AA4BC;
+  --mist:        #7E89A8;
+  --volt:        #5C8AFF;
+  --volt-strong: #85AAFF;  /* hover (brighter on dark) */
+  --volt-arc:    #9B7BFF;
+  --volt-soft:   rgba(92, 138, 255, 0.55);
+  --volt-dim:    rgba(92, 138, 255, 0.12);
+  --ok:          #4ADE80;
+  --grid:        rgba(92, 138, 255, 0.05);
+  --cta-glow:    0 0 24px rgba(92, 138, 255, 0.35);
+  --pulse-glow:  drop-shadow(0 0 6px rgba(92, 138, 255, 0.65));
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────── */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 72px; /* account for sticky navbar */
+  scroll-padding-top: 88px;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  transition: background-color 0.3s, color 0.3s;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ─── Focus rings ───────────────────────────────────────────────────── */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* ─── Selection ─────────────────────────────────────────────────────── */
 ::selection {
-  background-color: var(--accent-subtle);
-  color: var(--text-primary);
+  background-color: var(--volt-dim);
+  color: var(--volt);
+}
+
+:focus-visible {
+  outline: 2px solid var(--volt);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Volt gradient text — the one glowing phrase ───────────────────── */
+.volt-gradient {
+  background-image: linear-gradient(100deg, var(--volt), var(--volt-arc));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ─── Blueprint grid — hero texture, fades out downward ─────────────── */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, black 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, black 25%, transparent 78%);
+}
+
+/* ─── Pulse line — the signature element ────────────────────────────── */
+.pulse-base {
+  stroke: var(--line);
+}
+
+.pulse-trace {
+  stroke: var(--volt);
+  stroke-dasharray: 110 490;
+  stroke-dashoffset: 600;
+  animation: trace 5.5s linear infinite;
+  filter: var(--pulse-glow);
+}
+
+@keyframes trace {
+  to {
+    stroke-dashoffset: -600;
+  }
+}
+
+/* ─── Scroll-reveal — gated on .js so content is visible without JS ── */
+html.js .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.65s var(--ease),
+    transform 0.65s var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+html.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── Hero entrance — one orchestrated moment ───────────────────────── */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Transform-only variant for LCP elements (h1, bio): never paint at
+   opacity 0 or Lighthouse defers the largest contentful paint. */
+@keyframes rise-solid {
+  from {
+    transform: translateY(22px);
+  }
+  to {
+    transform: none;
+  }
+}
+
+html.js .hero-rise {
+  opacity: 0;
+  animation: rise 0.7s var(--ease) forwards;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+html.js .hero-rise-solid {
+  animation: rise-solid 0.7s var(--ease) backwards;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+/* ─── Reduced motion: everything lands instantly ────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.js .reveal,
+  html.js .hero-rise,
+  html.js .hero-rise-solid {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+  }
+  .pulse-trace {
+    animation: none;
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+    filter: none;
+    opacity: 0.5;
+  }
+  body {
+    transition: none;
+  }
 }
