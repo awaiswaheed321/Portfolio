@@ -1,252 +1,156 @@
-'use client';
-
 import Image from 'next/image';
-import { motion } from 'framer-motion';
-import { MapPin, Download, Github, Linkedin, Mail, ChevronDown } from 'lucide-react';
-import ParticleCanvas from '@/components/ui/ParticleCanvas';
+import { contact, stats } from '@/lib/data';
+import { ArrowDown, ArrowUpRight } from '@/components/ui/Icons';
 
-/* ─── Animation variants ──────────────────────────────────────────────── */
-const container = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-};
-
-const fadeUp = {
-  hidden:  { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
-};
-
-const photoVariant = {
-  hidden:  { opacity: 0, scale: 0.92 },
-  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeOut', delay: 0.1 } },
-};
-
-/* ─── CTA button classes ─────────────────────────────────────────────── */
-const PRIMARY_BTN =
-  'inline-flex items-center gap-2 px-5 py-2.5 rounded-btn ' +
-  'bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white ' +
-  'text-sm font-semibold transition-colors duration-150 ' +
-  'focus-visible:ring-2 focus-visible:ring-[var(--accent)] focus-visible:ring-offset-2 ' +
-  'focus-visible:ring-offset-[var(--bg-primary)]';
-
-const SECONDARY_BTN =
-  'inline-flex items-center gap-2 px-5 py-2.5 rounded-btn ' +
-  'border border-[var(--border)] text-[var(--text-secondary)] ' +
-  'hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)] ' +
-  'text-sm font-medium transition-colors duration-150 ' +
-  'focus-visible:ring-2 focus-visible:ring-[var(--accent)]';
-
-/* ─── Component ──────────────────────────────────────────────────────── */
+/**
+ * The craft statement. The 3-day silent outage and the
+ * nothing-fails-silently engineering are real claims from
+ * data/experience.md, as is every number on the metric board.
+ */
 export default function Hero() {
   return (
     <section
-      id="about"
-      className="relative min-h-[calc(100vh-3.5rem)] md:min-h-[calc(100vh-4rem)] flex items-center overflow-hidden"
+      id="top"
       aria-label="Introduction"
+      className="relative overflow-hidden pt-28 md:pt-36 lg:pt-40 pb-16 md:pb-24"
     >
-      {/* Particle network background */}
-      <ParticleCanvas />
+      {/* Blueprint grid, fading out downward */}
+      <div aria-hidden className="hero-grid absolute inset-0 pointer-events-none" />
 
-      {/* Radial glow behind photo */}
-      <div
-        className="absolute inset-0 pointer-events-none select-none"
-        aria-hidden
-        style={{
-          background:
-            'radial-gradient(ellipse 55% 60% at 78% 50%, color-mix(in srgb, var(--accent) 6%, transparent), transparent 70%)',
-        }}
-      />
-
-      <div className="relative w-full max-w-content mx-auto px-6 md:px-8 lg:px-12 py-20">
-        <div className="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-16 lg:gap-20">
-
-          {/* ── Text ────────────────────────────────────────────── */}
-          <motion.div
-            className="flex-1 min-w-0 text-center md:text-left"
-            variants={container}
-            initial="hidden"
-            animate="visible"
+      <div className="relative flex flex-col-reverse lg:flex-row lg:items-center gap-10 lg:gap-16">
+        {/* Text column */}
+        <div className="flex-1 min-w-0">
+          {/* Status line */}
+          <p
+            className="hero-rise flex items-center gap-2.5 font-mono text-xs uppercase
+                       tracking-[0.2em] text-fog mb-8"
+            style={{ '--rise-delay': '0s' } as React.CSSProperties}
           >
-            {/* Availability chip */}
-            <motion.p
-              variants={fadeUp}
-              className="inline-block mb-5 text-xs font-semibold tracking-[0.1em] uppercase
-                         text-[var(--accent)]"
-            >
-              Open to new opportunities
-            </motion.p>
+            <span aria-hidden className="status-dot h-[7px] w-[7px] rounded-full bg-ok" />
+            Open to new opportunities
+          </p>
 
-            {/* Name */}
-            <motion.h1
-              variants={fadeUp}
-              className="text-5xl md:text-6xl font-bold tracking-[-0.03em]
-                         text-[var(--text-primary)] leading-[1.05] mb-4"
-            >
-              Awais Waheed
-            </motion.h1>
-
-            {/* Title + location */}
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-col sm:flex-row items-center md:items-center
-                         justify-center md:justify-start gap-2 sm:gap-3 mb-6"
-            >
-              <span className="text-xl text-[var(--text-secondary)] font-normal">
-                Senior Backend Engineer
-              </span>
-              <span
-                className="hidden sm:block text-[var(--border-col)]"
-                aria-hidden
-              >
-                ·
-              </span>
-              <span className="flex items-center gap-1.5 text-sm text-[var(--text-muted)]">
-                <MapPin size={13} strokeWidth={2} aria-hidden />
-                Irving, TX — Open to relocation
-              </span>
-            </motion.div>
-
-            {/* Bio */}
-            <motion.p
-              variants={fadeUp}
-              className="text-base text-[var(--text-secondary)] leading-[1.75]
-                         max-w-[540px] mx-auto md:mx-0 mb-8"
-            >
-              Senior Backend Engineer specializing in high-throughput distributed systems and
-              event-driven architectures. 6+ years building production systems in Java at
-              scale — currently owning a mission-critical streaming pipeline at 7-Eleven&apos;s
-              delivery platform. Deep experience with AWS, reactive programming, microservices,
-              and cloud migrations. Previously at Walmart via Confiz.
-            </motion.p>
-
-            {/* CTA buttons */}
-            <motion.div
-              variants={fadeUp}
-              className="flex flex-wrap items-center justify-center md:justify-start gap-3"
-            >
-              <a href="/AwaisWaheed_Resume.pdf" download className={PRIMARY_BTN}>
-                <Download size={14} strokeWidth={2.5} aria-hidden />
-                Download CV
-              </a>
-
-              <a
-                href="https://github.com/awaiswaheed321"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={SECONDARY_BTN}
-              >
-                <Github size={14} strokeWidth={2} aria-hidden />
-                GitHub
-              </a>
-
-              <a
-                href="https://www.linkedin.com/in/awaiswaheed96/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={SECONDARY_BTN}
-              >
-                <Linkedin size={14} strokeWidth={2} aria-hidden />
-                LinkedIn
-              </a>
-
-              <a
-                href="mailto:awaiswaheed.work@gmail.com"
-                className={SECONDARY_BTN}
-              >
-                <Mail size={14} strokeWidth={2} aria-hidden />
-                Email
-              </a>
-            </motion.div>
-          </motion.div>
-
-          {/* ── Photo (pop-out) ──────────────────────────────── */}
-          <motion.div
-            className="flex-shrink-0"
-            variants={photoVariant}
-            initial="hidden"
-            animate="visible"
+          {/* Kicker */}
+          <p
+            className="hero-rise font-mono text-[13px] text-mist mb-6"
+            style={{ '--rise-delay': '0.1s' } as React.CSSProperties}
           >
-            {/*
-              Pop-out technique:
-              Container is ~25% taller than the octagon.
-              The photo fills the tall container — face sits in the overflow zone
-              above the octagon top edge.
-              A gradient mask fades out the sky so only the person is visible.
-              The octagon border + glow frames the lower 78% of the container.
-            */}
-            <div className="relative w-[220px] md:w-[280px]">
+            Awais Waheed · Senior Backend Engineer · Irving, TX
+          </p>
 
-              {/* Photo layer — tall, clipped to "rectangle top + octagon bottom" shape */}
-              <div
-                className="relative w-full h-[280px] md:h-[360px]"
-                style={{
-                  clipPath: 'polygon(0% 0%, 100% 0%, 100% 78%, 70.7% 100%, 29.3% 100%, 0% 78%)',
-                  WebkitMaskImage:
-                    'linear-gradient(to bottom, transparent 0%, black 22%)',
-                  maskImage:
-                    'linear-gradient(to bottom, transparent 0%, black 22%)',
-                }}
-              >
-                <Image
-                  src="/profile.jpg"
-                  alt="Awais Waheed, Senior Backend Engineer"
-                  fill
-                  priority
-                  className="object-cover object-[center_45%]"
-                />
-              </div>
+          {/* Craft statement */}
+          <h1
+            className="hero-rise-solid font-display font-semibold text-ink
+                       text-[clamp(2.3rem,5.4vw,4rem)] leading-[1.1] tracking-[-0.02em]
+                       max-w-[19ch] mb-7"
+            style={{ '--rise-delay': '0.15s' } as React.CSSProperties}
+          >
+            <span className="sr-only">Awais Waheed, Senior Backend Engineer. </span>
+            I build systems that <span className="volt-gradient">fail loudly</span>.
+            And rarely.
+          </h1>
 
-              {/* Octagon glow + border — bottom 78% of container */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-[78%] pointer-events-none"
-                style={{
-                  filter:
-                    'drop-shadow(0 0 16px var(--photo-glow)) drop-shadow(0 0 50px var(--photo-glow-soft))',
-                }}
-              >
-                <svg
-                  className="w-full h-full"
-                  viewBox="0 0 100 100"
-                  preserveAspectRatio="none"
-                  aria-hidden
-                >
-                  {/* Open polyline — sides + bottom only, no top edge above the head */}
-                  <polyline
-                    points="0,29.3 0,70.7 29.3,100 70.7,100 100,70.7 100,29.3"
-                    fill="none"
-                    stroke="var(--accent)"
-                    strokeWidth="2"
-                    vectorEffect="non-scaling-stroke"
-                  />
-                </svg>
-              </div>
+          {/* Bio */}
+          <p
+            className="hero-rise-solid text-fog text-base md:text-[17px] leading-[1.8] max-w-[62ch] mb-10"
+            style={{ '--rise-delay': '0.25s' } as React.CSSProperties}
+          >
+            Java, AWS, event-driven pipelines. The worst outage I&apos;ve fixed had been
+            failing silently for three days, so I build systems that can&apos;t: dead-letter
+            queues, idempotent retries, and observability wired in from day one. Right now
+            that means the event stream powering analytics and debugging for 7-Eleven&apos;s
+            delivery platform. Before that, Walmart systems in 5,000+ U.S. stores.
+          </p>
 
-            </div>
-          </motion.div>
+          {/* CTAs */}
+          <div
+            className="hero-rise flex flex-wrap items-center gap-x-7 gap-y-4"
+            style={{ '--rise-delay': '0.4s' } as React.CSSProperties}
+          >
+            <a
+              href={contact.resume}
+              download
+              className="inline-flex items-center gap-2 rounded-[6px] bg-volt px-5 py-2.5
+                         font-mono text-[13px] font-medium text-ground shadow-cta
+                         hover:bg-volt-strong transition-colors duration-200"
+            >
+              Download résumé
+              <ArrowDown size={13} />
+            </a>
+            <a
+              href={contact.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono text-[13px] text-fog
+                         hover:text-volt transition-colors duration-200"
+            >
+              GitHub
+              <ArrowUpRight size={12} />
+            </a>
+            <a
+              href={contact.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 font-mono text-[13px] text-fog
+                         hover:text-volt transition-colors duration-200"
+            >
+              LinkedIn
+              <ArrowUpRight size={12} />
+            </a>
+            <a
+              href={`mailto:${contact.email}`}
+              className="inline-flex items-center gap-1.5 font-mono text-[13px] text-fog
+                         hover:text-volt transition-colors duration-200"
+            >
+              Email
+              <ArrowUpRight size={12} />
+            </a>
+          </div>
+        </div>
 
+        {/* Portrait — gradient ring, front and center */}
+        <div
+          className="hero-rise-solid self-center lg:self-auto shrink-0"
+          style={{ '--rise-delay': '0.2s' } as React.CSSProperties}
+        >
+          <div className="rounded-full p-[3px] shadow-cta
+                          bg-[linear-gradient(135deg,var(--volt),var(--iris),var(--rose))]">
+            <Image
+              src="/profile.webp"
+              alt="Portrait of Awais Waheed"
+              width={260}
+              height={260}
+              priority
+              className="h-40 w-40 md:h-52 md:w-52 lg:h-[260px] lg:w-[260px]
+                         rounded-full object-cover border-4 border-[color:var(--ground)]"
+            />
+          </div>
         </div>
       </div>
 
-      {/* ── Scroll indicator ──────────────────────────────────── */}
-      <motion.a
-        href="#experience"
-        aria-label="Scroll to experience"
-        className="absolute bottom-8 left-1/2 -translate-x-1/2
-                   flex flex-col items-center gap-1.5 cursor-pointer
-                   text-[var(--text-muted)] hover:text-[var(--accent)]
-                   transition-colors duration-150"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
+      {/* Metric board — one card per series, dashboard style */}
+      <dl
+        className="hero-rise relative mt-14 md:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
+        style={{ '--rise-delay': '0.55s' } as React.CSSProperties}
       >
-        <span className="text-[10px] tracking-[0.15em] uppercase">scroll</span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={16} strokeWidth={2} aria-hidden />
-        </motion.div>
-      </motion.a>
+        {stats.map(({ value, label, hueVar, hueText }) => (
+          <div
+            key={label}
+            className="rounded-[10px] border border-line-faint bg-surface
+                       px-4 py-4 md:px-5 transition-transform duration-200 hover:-translate-y-0.5"
+            style={{
+              borderTop: `2px solid color-mix(in srgb, var(${hueVar}) 75%, transparent)`,
+              boxShadow: `0 1px 0 color-mix(in srgb, var(${hueVar}) 6%, transparent)`,
+            }}
+          >
+            <dt className="sr-only">{label}</dt>
+            <dd className={`font-mono text-xl md:text-2xl ${hueText}`}>{value}</dd>
+            <dd className="mt-1 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.12em] text-mist">
+              {label}
+            </dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

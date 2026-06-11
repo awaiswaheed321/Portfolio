@@ -1,162 +1,76 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import {
-  SiTypescript, SiPython, SiCplusplus, SiDotnet,
-  SiSpringboot, SiHibernate, SiNestjs, SiReact, SiLangchain, SiApachekafka,
-  SiKubernetes, SiDocker, SiJenkins, SiNewrelic, SiSplunk, SiSonarqubeserver,
-  SiMongodb, SiMysql, SiPostgresql,
-  SiApachemaven, SiGit, SiPostman, SiLiquibase, SiJira, SiGithubcopilot, SiClaude,
-  SiJunit5,
-} from 'react-icons/si';
-import { FaJava, FaAws } from 'react-icons/fa';
-import type { IconType } from 'react-icons';
-import SectionHeading from '@/components/ui/SectionHeading';
+import Section from '@/components/ui/Section';
+import Reveal from '@/components/ui/Reveal';
 import { skillGroups } from '@/lib/data';
 
-/* ─── Icon map ────────────────────────────────────────────────────────── */
-const skillIcons: Record<string, IconType> = {
-  // Languages
-  'Java':             FaJava,
-  'TypeScript':       SiTypescript,
-  'Python':           SiPython,
-  'C++':              SiCplusplus,
-  'C#/.NET':          SiDotnet,
-  // Frameworks & Libraries
-  'Spring Boot':      SiSpringboot,
-  'Hibernate':        SiHibernate,
-  'Nest.js':          SiNestjs,
-  'React.js':         SiReact,
-  'LangChain':        SiLangchain,
-  'Apache Kafka':     SiApachekafka,
-  'AWS Kinesis':      FaAws,
-  'AWS SQS':          FaAws,
-  // Cloud & Infrastructure
-  'AWS':              FaAws,
-  'Kubernetes':       SiKubernetes,
-  'Docker':           SiDocker,
-  'Jenkins':          SiJenkins,
-  'New Relic':        SiNewrelic,
-  'Splunk':           SiSplunk,
-  'SonarQube':        SiSonarqubeserver,
-  // Databases
-  'MongoDB':          SiMongodb,
-  'MySQL':            SiMysql,
-  'PostgreSQL':       SiPostgresql,
-  'Amazon RDS':       FaAws,
-  // Tools
-  'JUnit':            SiJunit5,
-  'Maven':            SiApachemaven,
-  'Git':              SiGit,
-  'Postman':          SiPostman,
-  'Liquibase':        SiLiquibase,
-  'JIRA':             SiJira,
-  'GitHub Copilot':   SiGithubcopilot,
-  'Claude Code':      SiClaude,
+/* Each category is a tile in the mosaic with its own hue. Render order
+   and spans are tuned to chip counts: the three small categories share
+   the first row, the two big ones get wide tiles below. */
+const TILE_BY_CATEGORY: Record<string, { hue: string; span: string; order: number }> = {
+  'Languages':              { hue: '--volt', span: 'lg:col-span-2', order: 0 },
+  'Frameworks & Libraries': { hue: '--iris', span: 'lg:col-span-2', order: 1 },
+  'Databases':              { hue: '--rose', span: 'lg:col-span-2', order: 2 },
+  'Cloud & Infrastructure': { hue: '--aqua', span: 'lg:col-span-3', order: 3 },
+  'Tools & Practices':      { hue: '--ok',   span: 'lg:col-span-3', order: 4 },
 };
+const FALLBACK_TILE = { hue: '--volt', span: 'lg:col-span-3', order: 99 };
 
-/* ─── Animation variants ──────────────────────────────────────────────── */
-const sectionVariants = {
-  hidden:  { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
-};
-
-const containerVariants = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.08 } },
-};
-
-const groupVariants = {
-  hidden:  { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' } },
-};
-
-const badgeContainerVariants = {
-  hidden:  {},
-  visible: { transition: { staggerChildren: 0.04 } },
-};
-
-const badgeVariants = {
-  hidden:  { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' } },
-};
-
-/* ─── Component ──────────────────────────────────────────────────────── */
 export default function Skills() {
   return (
-    <section
+    <Section
       id="skills"
-      className="py-12 md:py-20 bg-[var(--bg-secondary)]"
-      aria-label="Skills"
+      index="03"
+      title="Toolchain"
+      description="The languages, infrastructure, and practices behind the systems."
+      accentText="text-aqua"
+      accentBg="bg-aqua"
+      accentVar="--aqua"
     >
-      <div className="max-w-content mx-auto px-6 md:px-8 lg:px-12">
-        <motion.div
-          variants={sectionVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          <SectionHeading
-            label="03 / SKILLS"
-            title="Technical Skills"
-            description="Technologies and practices I use to build production systems at scale."
-          />
-        </motion.div>
-
-        <motion.div
-          className="flex flex-col gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-        >
-          {skillGroups.map(({ category, skills }) => (
-            <motion.div key={category} variants={groupVariants}>
-              {/* Category label */}
-              <h3
-                className="text-xs font-semibold tracking-[0.08em] uppercase
-                           text-[var(--text-muted)] mb-3"
+      <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        {[...skillGroups]
+          .sort(
+            (a, b) =>
+              (TILE_BY_CATEGORY[a.category] ?? FALLBACK_TILE).order -
+              (TILE_BY_CATEGORY[b.category] ?? FALLBACK_TILE).order
+          )
+          .map((group, i) => {
+          const tile = TILE_BY_CATEGORY[group.category] ?? FALLBACK_TILE;
+          return (
+            <Reveal key={group.category} delay={i * 0.05} className={tile.span}>
+              <div
+                className="h-full rounded-[12px] border border-line-faint bg-surface p-5"
+                style={{
+                  borderTop: `2px solid color-mix(in srgb, var(${tile.hue}) 70%, transparent)`,
+                }}
               >
-                {category}
-              </h3>
-
-              {/* Badges */}
-              <motion.div
-                className="flex flex-wrap gap-2"
-                variants={badgeContainerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: '-60px' }}
-              >
-                {skills.map((skill) => {
-                  const Icon = skillIcons[skill];
-                  return (
-                    <motion.span
+                <h3 className="flex items-center gap-2.5 font-mono text-xs font-normal uppercase
+                               tracking-[0.16em] text-mist mb-4">
+                  <span
+                    aria-hidden
+                    className="inline-block h-[7px] w-[7px] rounded-full"
+                    style={{ backgroundColor: `var(${tile.hue})` }}
+                  />
+                  {group.category}
+                </h3>
+                <ul className="flex flex-wrap gap-2">
+                  {group.skills.map((skill) => (
+                    <li
                       key={skill}
-                      variants={badgeVariants}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5
-                                 text-sm font-medium rounded-badge
-                                 bg-[var(--bg-tertiary)] border border-[var(--border)]
-                                 text-[var(--text-secondary)]
-                                 hover:border-[var(--accent)] hover:text-[var(--accent)]
-                                 transition-colors duration-150 cursor-default"
+                      className="rounded-[6px] px-2.5 py-1 text-[13px] font-medium"
+                      style={{
+                        color: `var(${tile.hue})`,
+                        backgroundColor: `color-mix(in srgb, var(${tile.hue}) 9%, transparent)`,
+                        border: `1px solid color-mix(in srgb, var(${tile.hue}) 24%, transparent)`,
+                      }}
                     >
-                      {Icon && (
-                        <Icon
-                          size={13}
-                          aria-hidden
-                          className="flex-shrink-0 opacity-75"
-                        />
-                      )}
                       {skill}
-                    </motion.span>
-                  );
-                })}
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Reveal>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

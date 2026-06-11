@@ -11,13 +11,13 @@
 
 ### Short (hero section)
 
-Senior Backend Engineer specializing in high-throughput distributed systems and event-driven architectures. 6+ years building production systems in Java at scale — currently owning a mission-critical streaming pipeline at 7-Eleven's delivery platform. Deep experience with AWS, reactive programming, microservices, and cloud migrations. Previously at Walmart via Confiz.
+Senior Backend Engineer specializing in high-throughput distributed systems and event-driven architectures. 6+ years building production systems in Java at scale — currently owning the event-streaming service that powers analytics and debugging across 7-Eleven's delivery platform. Deep experience with AWS, reactive programming, microservices, and cloud migrations. Previously at Walmart via Confiz.
 
 ### Long (full About)
 
 Senior Backend Engineer with 6+ years building high-throughput distributed systems, event-driven architectures, and production-grade microservices.
 
-Currently contracted at 7-Eleven's Delivery as a Service (DaaS) platform — owning a mission-critical streaming service that processes 1,000,000+ messages/day on a single instance, integrating delivery partners DoorDash, UberEats, and Skipcart into a unified pipeline.
+Currently contracted at 7-Eleven's Delivery as a Service (DaaS) platform — owning the streaming service that captures delivery events from DoorDash, UberEats, and Skipcart into a unified pipeline powering analytics and debugging, processing 1,000,000+ messages/day on a single instance.
 
 My work centers on reactive, non-blocking Java systems built for scale. I've led a full Azure-to-AWS cloud migration, consolidated multi-service architectures, and solo-diagnosed a production outage that had taken down all 50 database connections for 3 days undetected — tracing it from connection timeouts through DLQ spikes to legacy reactive chain issues, then eliminating it permanently while doubling throughput.
 
@@ -56,7 +56,7 @@ Based in Irving, TX. Open to relocation.
 
 ### Master of Science, Computer Science
 **University:** Maharishi International University — Fairfield, IA
-**Years:** 2024 – Present (Expected Apr 2027)
+**Years:** 2024 – 2026
 
 ### Bachelor of Science, Computer Sciences
 **University:** SEECS, NUST — Islamabad, Pakistan

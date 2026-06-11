@@ -1,161 +1,97 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import ThemeToggle from '@/components/ui/ThemeToggle';
+import { contact } from '@/lib/data';
 
 const NAV_LINKS = [
-  { label: 'About',      href: '#about' },
   { label: 'Experience', href: '#experience' },
-  { label: 'Skills',     href: '#skills' },
-  { label: 'Projects',   href: '#projects' },
-  { label: 'Contact',    href: '#contact' },
+  { label: 'Skills', href: '#skills' },
+  { label: 'Projects', href: '#projects' },
+  { label: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled]         = useState(false);
-  const [mobileOpen, setMobileOpen]     = useState(false);
-  const [activeSection, setActiveSection] = useState('about');
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('');
 
-  // Show border on scroll
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Scroll spy — track which section occupies the upper viewport
+  // Scroll spy: highlight the section currently in the upper viewport
   useEffect(() => {
-    const sections = document.querySelectorAll('section[id]');
+    const sections = NAV_LINKS
+      .map(({ href }) => document.getElementById(href.slice(1)))
+      .filter((el): el is HTMLElement => el !== null);
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveSection(entry.target.id);
+          if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      {
-        threshold: 0,
-        rootMargin: '-64px 0px -55% 0px',
-      }
+      { rootMargin: '-20% 0px -65% 0px' }
     );
-    sections.forEach((s) => observer.observe(s));
+    sections.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
-  // Lock body scroll when mobile menu is open
-  useEffect(() => {
-    document.body.style.overflow = mobileOpen ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
-  }, [mobileOpen]);
 
   return (
     <header
       className={[
-        'sticky top-0 z-50 w-full',
-        'bg-[rgba(229,232,240,0.92)] dark:bg-[rgba(15,17,23,0.92)]',
-        'backdrop-blur-md transition-all duration-300',
+        'fixed top-0 inset-x-0 z-50 transition-[border-color,background-color] duration-300',
+        'border-b',
         scrolled
-          ? 'border-b border-[var(--border)]'
-          : 'border-b border-transparent',
+          ? 'bg-[color-mix(in_srgb,var(--ground)_88%,transparent)] backdrop-blur-md border-line-faint'
+          : 'bg-transparent border-transparent',
       ].join(' ')}
     >
-      <div className="max-w-content mx-auto px-6 md:px-8 lg:px-12">
-        <div className="flex items-center justify-between h-14 md:h-16">
-
-          {/* ── Wordmark ── */}
+      <div aria-hidden className="spectrum-strip h-[2px]" />
+      <div className="mx-auto max-w-content px-6 md:px-10 lg:px-12">
+        <div className="flex h-16 items-center justify-between gap-2">
           <a
-            href="#about"
-            className="font-bold text-lg tracking-tight
-                       text-[var(--text-primary)] hover:text-[var(--accent)]
-                       transition-colors duration-150
-                       focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded"
+            href="#top"
+            className="font-display font-semibold tracking-tight text-ink hover:text-volt
+                       transition-colors duration-200 whitespace-nowrap"
           >
             Awais Waheed
           </a>
 
-          {/* ── Desktop nav ── */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-            {NAV_LINKS.map(({ label, href }) => {
-              const id       = href.replace('#', '');
-              const isActive = activeSection === id;
-              return (
-                <a
-                  key={href}
-                  href={href}
-                  aria-current={isActive ? 'location' : undefined}
-                  className={[
-                    'px-4 py-2 text-sm font-medium rounded-md transition-all duration-150',
-                    'focus-visible:ring-2 focus-visible:ring-[var(--accent)]',
-                    isActive
-                      ? [
-                          'text-[var(--accent)]',
-                          '[text-decoration:underline]',
-                          '[text-decoration-color:var(--accent)]',
-                          '[text-decoration-thickness:2px]',
-                          '[text-underline-offset:4px]',
-                        ].join(' ')
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]',
-                  ].join(' ')}
-                >
-                  {label}
-                </a>
-              );
-            })}
-          </nav>
-
-          {/* ── Right controls ── */}
-          <div className="flex items-center gap-1">
-            <ThemeToggle />
-            <button
-              onClick={() => setMobileOpen((o) => !o)}
-              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-nav"
-              className="md:hidden w-9 h-9 flex items-center justify-center rounded-full
-                         text-[var(--text-secondary)] hover:text-[var(--text-primary)]
-                         hover:bg-[var(--bg-tertiary)] transition-colors duration-150
-                         focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+          <nav aria-label="Main navigation" className="flex items-center gap-1 md:gap-2">
+            {NAV_LINKS.map(({ label, href }, i) => (
+              <a
+                key={href}
+                href={href}
+                aria-current={active === href.slice(1) ? 'true' : undefined}
+                className={[
+                  // On mobile only Contact survives; full set from md up
+                  i === NAV_LINKS.length - 1 ? 'inline-block' : 'hidden md:inline-block',
+                  'px-3 py-2 font-mono text-[13px] transition-colors duration-200',
+                  active === href.slice(1)
+                    ? 'text-volt'
+                    : 'text-fog hover:text-ink',
+                ].join(' ')}
+              >
+                {label}
+              </a>
+            ))}
+            <a
+              href={contact.resume}
+              download
+              className="mx-1 inline-block rounded-[6px] border border-line px-4 py-1.5
+                         font-mono text-[13px] text-ink whitespace-nowrap
+                         hover:border-volt hover:text-volt
+                         transition-colors duration-200"
             >
-              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-            </button>
-          </div>
+              Résumé
+            </a>
+            <ThemeToggle />
+          </nav>
         </div>
       </div>
-
-      {/* ── Mobile menu ── */}
-      {mobileOpen && (
-        <div
-          id="mobile-nav"
-          className="md:hidden border-t border-[var(--border)] bg-[var(--bg-primary)]"
-        >
-          <nav
-            className="max-w-content mx-auto px-6 py-4 flex flex-col gap-1"
-            aria-label="Mobile navigation"
-          >
-            {NAV_LINKS.map(({ label, href }) => {
-              const id       = href.replace('#', '');
-              const isActive = activeSection === id;
-              return (
-                <a
-                  key={href}
-                  href={href}
-                  aria-current={isActive ? 'location' : undefined}
-                  onClick={() => setMobileOpen(false)}
-                  className={[
-                    'px-4 py-3 text-sm font-medium rounded-md transition-colors duration-150',
-                    'focus-visible:ring-2 focus-visible:ring-[var(--accent)]',
-                    isActive
-                      ? 'text-[var(--accent)] bg-[var(--accent-subtle)]'
-                      : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]',
-                  ].join(' ')}
-                >
-                  {label}
-                </a>
-              );
-            })}
-          </nav>
-        </div>
-      )}
     </header>
   );
 }

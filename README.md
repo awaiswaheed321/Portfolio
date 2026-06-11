@@ -9,11 +9,13 @@ Live at [awaiswaheed.net](https://awaiswaheed.net)
 | Layer | Choice |
 |---|---|
 | Framework | Next.js (App Router) |
-| Styling | Tailwind CSS |
-| Animations | Framer Motion |
-| Font | Geist |
-| Icons | Lucide React, React Icons |
+| Styling | Tailwind CSS + CSS variable tokens |
+| Animations | Hand-rolled CSS + IntersectionObserver (no library) |
+| Fonts | Bricolage Grotesque (display) + Geist Sans/Mono |
+| Icons | Inline SVGs (no library) |
 | Deployment | GitHub Pages (static export) |
+
+The visual system ("Observability") is documented in [DESIGN.md](DESIGN.md).
 
 ## Development
 

@@ -215,10 +215,55 @@ export const projects: Project[] = [
   },
 ];
 
+/* ─── Education ──────────────────────────────────────────────────────── */
+
+export interface EducationEntry {
+  degree: string;
+  school: string;
+  location: string;
+  years: string;
+}
+
+export const education: EducationEntry[] = [
+  {
+    degree: 'Master of Science, Computer Science',
+    school: 'Maharishi International University',
+    location: 'Fairfield, IA',
+    years: '2024 – 2026',
+  },
+  {
+    degree: 'Bachelor of Science, Computer Sciences',
+    school: 'SEECS, NUST',
+    location: 'Islamabad, Pakistan',
+    years: '2015 – 2019',
+  },
+];
+
+/* ─── Hero telemetry — every number is sourced from experience.md ────── */
+
+export interface Stat {
+  value: string;
+  label: string;
+  /** CSS custom property for the metric's hue, e.g. '--volt' */
+  hueVar: string;
+  /** Static Tailwind text class matching hueVar (JIT needs literals) */
+  hueText: string;
+}
+
+export const stats: Stat[] = [
+  { value: '99.99%', label: 'uptime · on-call SLA',        hueVar: '--ok',   hueText: 'text-ok' },
+  { value: '1M+',    label: 'peak msgs/day',               hueVar: '--volt', hueText: 'text-volt' },
+  { value: '5,000+', label: 'stores · Walmart rollout',    hueVar: '--aqua', hueText: 'text-aqua' },
+  { value: '6+',     label: 'years · production Java',     hueVar: '--iris', hueText: 'text-iris' },
+];
+
 /* ─── Contact ────────────────────────────────────────────────────────── */
 
 export const contact = {
   email:    'awaiswaheed.work@gmail.com',
   github:   'https://github.com/awaiswaheed321',
   linkedin: 'https://www.linkedin.com/in/awaiswaheed96/',
+  resume:   '/AwaisWaheed_Resume.pdf',
 };
+
+export const siteUrl = 'https://awaiswaheed.net';
