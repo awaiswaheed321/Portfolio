@@ -5,8 +5,9 @@ import type { ExperienceEntry } from '@/lib/data';
 import { ChevronDown } from '@/components/ui/Icons';
 
 /**
- * One role on the timeline. Bullets collapse behind an animated
- * grid-rows transition (no measurement, no animation library).
+ * One role on the timeline. The dot docks the entry onto the rail
+ * drawn by the parent; bullets collapse behind an animated grid-rows
+ * transition (no measurement, no animation library).
  */
 export default function ExperienceItem({
   entry,
@@ -19,13 +20,19 @@ export default function ExperienceItem({
   const bodyId = useId();
 
   return (
-    <article
-      className={[
-        'border-t border-line-faint py-8 md:py-10 last:border-b',
-        'border-l-2 pl-5 md:pl-7 -ml-px transition-colors duration-300',
-        open ? 'border-l-volt' : 'border-l-transparent hover:border-l-line',
-      ].join(' ')}
-    >
+    <article className="relative pl-7 md:pl-9 pb-10 md:pb-12 last:pb-0">
+      {/* Timeline node */}
+      <span
+        aria-hidden
+        className={[
+          'absolute -left-[5px] top-[7px] h-[9px] w-[9px] rounded-full border',
+          'transition-colors duration-300',
+          open
+            ? 'bg-volt border-volt'
+            : 'bg-ground border-line',
+        ].join(' ')}
+      />
+
       {/* Header row */}
       <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-1.5 md:gap-6">
         <h3 className="font-display text-lg font-semibold tracking-tight text-ink">
@@ -45,7 +52,7 @@ export default function ExperienceItem({
         <p className="mt-4 text-[15px] leading-[1.75] text-fog max-w-[68ch]">{entry.intro}</p>
       )}
 
-      {/* Collapsible body */}
+      {/* Collapsible bullets */}
       <div
         id={bodyId}
         className="grid transition-[grid-template-rows] duration-500 ease-out motion-reduce:transition-none"
@@ -64,21 +71,24 @@ export default function ExperienceItem({
               </li>
             ))}
           </ul>
-          <p className="mt-5 font-mono text-xs leading-relaxed text-mist">
-            {entry.technologies.join(' · ')}
-          </p>
         </div>
       </div>
+
+      {/* Tech stack stays visible even when collapsed — a closed row
+          should still tell you what the role was built with */}
+      <p className="mt-4 font-mono text-xs leading-relaxed text-mist">
+        {entry.technologies.join(' · ')}
+      </p>
 
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
         aria-controls={bodyId}
-        className="mt-4 inline-flex items-center gap-1.5 font-mono text-xs text-volt
+        className="mt-3 inline-flex items-center gap-1.5 font-mono text-xs text-volt
                    hover:text-volt-strong transition-colors duration-200"
       >
-        {open ? 'Collapse' : `Details (${entry.bullets.length})`}
+        {open ? 'Collapse' : `Highlights (${entry.bullets.length})`}
         <ChevronDown
           size={12}
           className={`transition-transform duration-300 motion-reduce:transition-none ${

@@ -10,23 +10,24 @@
 :root {
   color-scheme: light;
 
-  --ground:      #F5F7FC;  /* page */
-  --surface:     #FFFFFF;  /* raised panels */
-  --surface-2:   #EDF0F8;  /* hover surfaces */
-  --line:        #D9DEEC;  /* hairlines */
-  --line-faint:  #E7EAF4;  /* sub-hairlines */
+  --ground:      #DEE4EF;  /* page — grey-blue paper, decidedly not white */
+  --surface:     #EBEFF6;  /* raised panels */
+  --surface-2:   #CFD7E5;  /* hover surfaces */
+  --line:        #B9C3D6;  /* hairlines */
+  --line-faint:  #CBD3E2;  /* sub-hairlines */
   --ink:         #141823;  /* primary text */
-  --fog:         #4E586E;  /* secondary text */
-  --mist:        #626E89;  /* tertiary / metadata — keep ≥4.5:1 on ground */
-  --volt:        #2E55E8;  /* electric blue */
-  --volt-strong: #1E40D8;  /* hover (darker on light) */
-  --volt-arc:    #6D3FE0;  /* gradient end — indigo */
-  --volt-soft:   rgba(46, 85, 232, 0.45);
-  --volt-dim:    rgba(46, 85, 232, 0.10);
-  --ok:          #15803D;  /* status dot only */
-  --grid:        rgba(46, 85, 232, 0.07);   /* blueprint grid lines */
-  --cta-glow:    0 4px 20px rgba(46, 85, 232, 0.25);
-  --pulse-glow:  drop-shadow(0 0 5px rgba(46, 85, 232, 0.5));
+  --fog:         #49536A;  /* secondary text */
+  --mist:        #525D76;  /* tertiary / metadata — keep ≥4.5:1 on ground */
+  --volt:        #2A4EDB;  /* electric blue — interaction + Experience */
+  --volt-strong: #1E3FC9;  /* hover (darker on light) */
+  --volt-soft:   rgba(42, 78, 219, 0.45);
+  --volt-dim:    rgba(42, 78, 219, 0.10);
+  --iris:        #6D3FE0;  /* violet — Education */
+  --aqua:        #0C677F;  /* cyan — Toolchain */
+  --rose:        #BE185D;  /* magenta — Selected Work */
+  --ok:          #116A33;  /* green — status dot + Contact */
+  --grid:        rgba(42, 78, 219, 0.08);   /* blueprint grid lines */
+  --cta-glow:    0 4px 20px rgba(42, 78, 219, 0.25);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -44,13 +45,14 @@
   --mist:        #7E89A8;
   --volt:        #5C8AFF;
   --volt-strong: #85AAFF;  /* hover (brighter on dark) */
-  --volt-arc:    #9B7BFF;
   --volt-soft:   rgba(92, 138, 255, 0.55);
   --volt-dim:    rgba(92, 138, 255, 0.12);
+  --iris:        #9B7BFF;
+  --aqua:        #3EC8E0;
+  --rose:        #F472B6;
   --ok:          #4ADE80;
   --grid:        rgba(92, 138, 255, 0.05);
   --cta-glow:    0 0 24px rgba(92, 138, 255, 0.35);
-  --pulse-glow:  drop-shadow(0 0 6px rgba(92, 138, 255, 0.65));
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────── */
@@ -81,12 +83,50 @@ body {
   border-radius: 2px;
 }
 
-/* ─── Volt gradient text — the one glowing phrase ───────────────────── */
+/* ─── Gradient text — the two glowing phrases ───────────────────────── */
 .volt-gradient {
-  background-image: linear-gradient(100deg, var(--volt), var(--volt-arc));
+  background-image: linear-gradient(100deg, var(--volt), var(--iris), var(--rose));
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+.mint-gradient {
+  background-image: linear-gradient(100deg, var(--ok), var(--aqua));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ─── Spectrum strip — the living trace of color along the top edge ── */
+.spectrum-strip {
+  background-image: linear-gradient(
+    90deg,
+    var(--volt),
+    var(--aqua),
+    var(--ok),
+    var(--iris),
+    var(--rose),
+    var(--volt)
+  );
+  background-size: 200% 100%;
+  animation: spectrum-pan 14s linear infinite;
+}
+
+@keyframes spectrum-pan {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+/* ─── Status dot — the small heartbeat that remains ─────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+.status-dot {
+  animation: pulse-dot 2.4s ease-in-out infinite;
 }
 
 /* ─── Blueprint grid — hero texture, fades out downward ─────────────── */
@@ -97,25 +137,6 @@ body {
   background-size: 44px 44px;
   -webkit-mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, black 25%, transparent 78%);
   mask-image: radial-gradient(ellipse 90% 75% at 50% 0%, black 25%, transparent 78%);
-}
-
-/* ─── Pulse line — the signature element ────────────────────────────── */
-.pulse-base {
-  stroke: var(--line);
-}
-
-.pulse-trace {
-  stroke: var(--volt);
-  stroke-dasharray: 110 490;
-  stroke-dashoffset: 600;
-  animation: trace 5.5s linear infinite;
-  filter: var(--pulse-glow);
-}
-
-@keyframes trace {
-  to {
-    stroke-dashoffset: -600;
-  }
 }
 
 /* ─── Scroll-reveal — gated on .js so content is visible without JS ── */
@@ -180,12 +201,9 @@ html.js .hero-rise-solid {
     transition: none;
     animation: none;
   }
-  .pulse-trace {
+  .spectrum-strip,
+  .status-dot {
     animation: none;
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-    filter: none;
-    opacity: 0.5;
   }
   body {
     transition: none;

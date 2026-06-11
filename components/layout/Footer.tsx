@@ -8,9 +8,6 @@ export default function Footer() {
           <p className="font-mono text-xs text-mist">
             © {new Date().getFullYear()} Awais Waheed · Irving, TX
           </p>
-          <p aria-hidden className="font-mono text-xs text-mist select-none">
-            {'// end of trace'}
-          </p>
           <nav aria-label="Footer" className="flex items-center gap-5">
             <a
               href={contact.github}

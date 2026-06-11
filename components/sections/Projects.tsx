@@ -1,47 +1,84 @@
-import SectionHeading from '@/components/ui/SectionHeading';
+import Section from '@/components/ui/Section';
 import Reveal from '@/components/ui/Reveal';
 import { projects } from '@/lib/data';
 
-/**
- * An editorial index, not a card grid — every entry is real shipped
- * work, so the index number and context tag do the visual lifting.
- */
+/* Each project card is a series with its own hue, cycling the palette. */
+const ROW_HUES = [
+  { var: '--volt', text: 'text-volt' },
+  { var: '--aqua', text: 'text-aqua' },
+  { var: '--iris', text: 'text-iris' },
+  { var: '--rose', text: 'text-rose' },
+  { var: '--ok',   text: 'text-ok' },
+];
+
 export default function Projects() {
   return (
-    <section id="projects" aria-label="Projects" className="py-16 md:py-24 scroll-mt-8">
-      <SectionHeading
-        index="04"
-        title="Selected Work"
-        description="Production systems and personal builds — from a 1M+ msg/day delivery pipeline to weekend full-stack projects."
-      />
-      <div className="flex flex-col">
-        {projects.map((project, i) => (
-          <Reveal key={project.name} delay={Math.min(i * 0.05, 0.15)}>
-            <article className="grid md:grid-cols-[3.5rem_minmax(0,1fr)] gap-x-6
-                                border-t border-line-faint py-8 last:border-b">
-              <p aria-hidden className="hidden md:block font-mono text-sm text-mist pt-1">
-                {String(i + 1).padStart(2, '0')}
-              </p>
-              <div>
+    <Section
+      id="projects"
+      index="04"
+      title="Selected Work"
+      description="Production systems and personal builds, from delivery-event pipelines to weekend full-stack projects."
+      accentText="text-rose"
+      accentBg="bg-rose"
+      accentVar="--rose"
+    >
+      <div className="grid sm:grid-cols-2 gap-4">
+        {projects.map((project, i) => {
+          const hue = ROW_HUES[i % ROW_HUES.length];
+          const featured = i === 0;
+          // Featured card takes a full row; if the remaining count is odd,
+          // stretch the last card so no orphan sits alone in the grid
+          const fullRow =
+            featured ||
+            (i === projects.length - 1 && (projects.length - 1) % 2 === 1);
+          return (
+            <Reveal
+              key={project.name}
+              delay={Math.min(i * 0.05, 0.15)}
+              className={fullRow ? 'sm:col-span-2' : ''}
+            >
+              <article
+                className={[
+                  'group relative h-full rounded-[12px] border border-line-faint bg-surface',
+                  'transition-[transform,border-color] duration-200 hover:-translate-y-0.5',
+                  featured ? 'p-6 md:p-8' : 'p-6',
+                ].join(' ')}
+                style={{
+                  borderTop: `2px solid color-mix(in srgb, var(${hue.var}) 70%, transparent)`,
+                }}
+              >
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
-                  <h3 className="font-display text-lg font-semibold tracking-tight text-ink">
+                  <p aria-hidden className={`font-mono text-xs ${hue.text}`}>
+                    {String(i + 1).padStart(2, '0')}
+                  </p>
+                  <h3
+                    className={[
+                      'font-display font-semibold tracking-tight text-ink',
+                      featured ? 'text-xl md:text-2xl' : 'text-lg',
+                    ].join(' ')}
+                  >
                     {project.name}
                   </h3>
-                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-volt">
+                  <p className={`font-mono text-[11px] uppercase tracking-[0.14em] ${hue.text}`}>
                     {project.context}
                   </p>
                 </div>
-                <p className="mt-2.5 text-[15px] leading-[1.75] text-fog max-w-[70ch]">
+                <p
+                  className={[
+                    'mt-3 text-[15px] leading-[1.75] text-fog',
+                    featured ? 'max-w-[75ch]' : '',
+                  ].join(' ')}
+                >
                   {project.description}
                 </p>
-                <p className="mt-3.5 font-mono text-xs text-mist">
+                <p className="mt-4 font-mono text-xs text-mist">
                   {project.stack.join(' · ')}
                 </p>
-              </div>
-            </article>
-          </Reveal>
-        ))}
+              </article>
+            </Reveal>
+          );
+        })}
       </div>
-    </section>
+    </Section>
   );
 }

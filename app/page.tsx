@@ -7,7 +7,7 @@ import Contact from '@/components/sections/Contact';
 
 export default function Home() {
   return (
-    <main className="mx-auto max-w-content px-6 md:px-10 lg:px-12">
+    <main id="main" className="mx-auto max-w-content px-6 md:px-10 lg:px-12">
       <Hero />
       <Experience />
       <Education />

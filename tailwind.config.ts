@@ -21,6 +21,9 @@ const config: Config = {
         'volt-strong': 'var(--volt-strong)',
         'volt-soft':   'var(--volt-soft)',
         'volt-dim':    'var(--volt-dim)',
+        iris:          'var(--iris)',
+        aqua:          'var(--aqua)',
+        rose:          'var(--rose)',
         ok:            'var(--ok)',
       },
       fontFamily: {

@@ -229,7 +229,7 @@ export const education: EducationEntry[] = [
     degree: 'Master of Science, Computer Science',
     school: 'Maharishi International University',
     location: 'Fairfield, IA',
-    years: '2024 – Present · Expected Apr 2027',
+    years: '2024 – 2026',
   },
   {
     degree: 'Bachelor of Science, Computer Sciences',
@@ -244,12 +244,17 @@ export const education: EducationEntry[] = [
 export interface Stat {
   value: string;
   label: string;
+  /** CSS custom property for the metric's hue, e.g. '--volt' */
+  hueVar: string;
+  /** Static Tailwind text class matching hueVar (JIT needs literals) */
+  hueText: string;
 }
 
 export const stats: Stat[] = [
-  { value: '1M+',    label: 'messages/day · current pipeline' },
-  { value: '5,000+', label: 'U.S. stores · Walmart rollout' },
-  { value: '6+',     label: 'years · production Java at scale' },
+  { value: '99.99%', label: 'uptime · on-call SLA',        hueVar: '--ok',   hueText: 'text-ok' },
+  { value: '1M+',    label: 'peak msgs/day',               hueVar: '--volt', hueText: 'text-volt' },
+  { value: '5,000+', label: 'stores · Walmart rollout',    hueVar: '--aqua', hueText: 'text-aqua' },
+  { value: '6+',     label: 'years · production Java',     hueVar: '--iris', hueText: 'text-iris' },
 ];
 
 /* ─── Contact ────────────────────────────────────────────────────────── */

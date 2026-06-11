@@ -72,18 +72,24 @@ All content lives in these files. Never hardcode content that conflicts with the
 
 ## Site Structure (in order)
 
-1. **Navbar** — display-face wordmark; mono section links, Résumé button,
-   theme toggle; fixed, gains blur/background only after scroll. No hamburger.
+1. **Navbar** — 2px spectrum strip on top; display-face wordmark; mono
+   section links with IntersectionObserver scroll-spy (active = volt);
+   Résumé button, theme toggle; fixed, gains blur/background only after
+   scroll. No hamburger; on mobile only the Contact link survives.
 2. **Hero** — status line, mono kicker, craft-statement headline with one
-   volt-gradient phrase, bio, CTAs, pulse trace. Blueprint grid texture.
-   **No stats row** — numbers live in the experience bullets.
-3. **Experience** (`01`) — hairline rows with a volt left border on the open
-   entry; first role expanded, others behind an accessible Details toggle.
-4. **Education** (`02`) — two hairline rows.
-5. **Skills / Toolchain** (`03`) — ledger rows.
-6. **Projects / Selected Work** (`04`) — editorial index rows, no cards.
-7. **Contact** (`05`) — color photo, gradient statement, email link. No form.
-8. **Footer** — copyright · `// end of trace` · links.
+   gradient phrase, bio, CTAs, then the four-card metric board (uptime, peak msgs/day, stores, years — real numbers,
+   one hue each). Blueprint grid texture. Throughput is never the headline.
+3. **Experience** (`01`) — sticky-rail section; timeline with node dots;
+   tech stack always visible per row; first role expanded, others behind
+   an accessible Highlights toggle.
+4. **Education** (`02`) — sticky-rail section; two cards side by side.
+5. **Skills / Toolchain** (`03`) — sticky-rail section; bento mosaic of
+   hue-tinted chip tiles.
+6. **Projects / Selected Work** (`04`) — sticky-rail section; featured-card
+   grid, palette cycling per card.
+7. **Contact** (`05`) — centered finale panel (breaks the rail pattern),
+   gradient statement, email link. No form (photo lives in the hero).
+8. **Footer** — copyright and links, nothing else.
 
 ---
 
@@ -91,20 +97,21 @@ All content lives in these files. Never hardcode content that conflicts with the
 
 ```
 app/
-  layout.tsx          # Fonts, metadata, theme+js pre-paint script (html has
+  layout.tsx          # Fonts, metadata, JSON-LD Person schema, skip link,
+                      # theme+js pre-paint script (html has
                       # suppressHydrationWarning for it)
-  page.tsx            # Sections, plain stack
+  page.tsx            # Sections, plain stack (main#main, skip-link target)
+  not-found.tsx       # Styled 404 (GitHub Pages serves out/404.html)
   globals.css         # Both theme token sets, grid, pulse, reveal/rise, reduced-motion
-  icon.svg            # Favicon (pulse blip)
+  icon.svg            # Favicon (ECG blip brand glyph)
 
 components/
   layout/Navbar.tsx   Footer.tsx
   sections/Hero.tsx   Experience.tsx  ExperienceItem.tsx  Education.tsx
            Skills.tsx Projects.tsx    Contact.tsx
   ui/Reveal.tsx       # IntersectionObserver scroll reveal
-     PulseLine.tsx    # Oscilloscope trace (signature element)
+     Section.tsx      # Sticky-rail section shell (heading + ghost numeral)
      ThemeToggle.tsx  # Stateless, CSS-driven icon swap
-     SectionHeading.tsx
      Icons.tsx        # All inline SVG icons
 
 data/                 # Content source of truth (markdown)
@@ -118,11 +125,12 @@ public/               # CNAME, og.png, profile.jpg, resume PDF, robots, sitemap
 
 - Do NOT add `next-themes` — theming is hand-rolled and hydration-safe
 - Do NOT add animation/icon/UI libraries — CSS + inline SVG only
-- Do NOT use gold/amber or teal — volt blue (`--volt`) is the only accent
+- Do NOT use gold/amber. Volt blue is the interaction color; iris/aqua/rose/ok are section identity hues (see DESIGN.md hue map)
 - Do NOT use `text-white` on volt fills — use `text-ground` (theme-adaptive)
-- Do NOT add badge pills or icon-topped card grids — hairline rows only
+- Do NOT add icon-topped card grids; hairline rows + hue-tinted chips (Skills) and metric cards (hero) are the only card-like elements
+- Do NOT use em-dashes in site copy — periods, commas, colons, or `·`
 - Do NOT call the 7-Eleven pipeline "mission-critical"
-- Do NOT lead the hero with throughput numbers or add a stats row
+- Do NOT lead the hero with throughput numbers
 - Do NOT add lorem ipsum or placeholder content anywhere
 - Do NOT change or delete the CNAME file
 - Do NOT replace `public/og.png` with a permanent `opengraph-image.tsx`
@@ -155,4 +163,4 @@ npm run lint      # ESLint (flat config — `next lint` no longer exists)
 - [ ] Both themes checked at those widths; toggle persists across reload
 - [ ] Lighthouse ≥ 95 performance, 100 a11y/best-practices/SEO (gzip server)
 - [ ] No console errors (including hydration) in production build
-- [ ] Reduced-motion: content visible instantly, pulse trace static
+- [ ] Reduced-motion: content visible instantly, spectrum strip and status dot static

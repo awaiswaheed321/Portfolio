@@ -9,11 +9,11 @@ All design decisions here take precedence over your own defaults.
 
 The site reads like the work: reliability engineering. The hero is a craft
 statement — *"I build systems that fail loudly — and rarely."* — over a faint
-blueprint grid, with an oscilloscope pulse line (one ECG blip, a traveling
-volt segment) as the signature element. Cool dark base with life in it;
-a genuinely polished light mode alongside.
+blueprint grid, with the animated spectrum strip (all five hues, slowly panning along the
+top edge) as the living element. Cool dark base with life in it; a soft
+blue-grey light mode alongside (never pure white).
 
-**The one thing a visitor should remember:** the thesis line and the pulse trace.
+**The one thing a visitor should remember:** the thesis line and the color system.
 
 ---
 
@@ -25,35 +25,48 @@ Two themes, both first-class. Light is `:root`, dark is `.dark` on `<html>`
 mapped in `tailwind.config.ts`. Never hardcode hex values in components.
 
 Semantics: `ground` = page, `surface` = raised, `ink` = primary text,
-`fog` / `mist` = secondary / tertiary text, `volt` = the one electric accent.
+`fog` / `mist` = secondary / tertiary text. **Volt is the interaction color;
+the other four hues are series colors** (dashboards give every series its
+own hue) used for section identity.
 
 ```css
 /* light */                      /* dark */
---ground:      #F5F7FC;          #0B0D15;
---surface:     #FFFFFF;          #11141F;
---surface-2:   #EDF0F8;          #161A28;
---line:        #D9DEEC;          #212740;
---line-faint:  #E7EAF4;          #171C2C;
+--ground:      #DEE4EF;          #0B0D15;   /* light is grey-blue paper, never white */
+--surface:     #EBEFF6;          #11141F;
+--surface-2:   #CFD7E5;          #161A28;
+--line:        #B9C3D6;          #212740;
+--line-faint:  #CBD3E2;          #171C2C;
 --ink:         #141823;          #ECEFF8;
---fog:         #4E586E;          #9AA4BC;
---mist:        #626E89;          #7E89A8;   /* keep ≥4.5:1 on ground */
---volt:        #2E55E8;          #5C8AFF;
---volt-strong: #1E40D8;          #85AAFF;   /* hover: darker on light, brighter on dark */
---volt-arc:    #6D3FE0;          #9B7BFF;   /* gradient end only */
---ok:          #15803D;          #4ADE80;   /* status dot only */
+--fog:         #49536A;          #9AA4BC;
+--mist:        #525D76;          #7E89A8;   /* keep ≥4.5:1 on ground */
+--volt:        #2A4EDB;          #5C8AFF;   /* blue · interaction + Experience */
+--volt-strong: #1E3FC9;          #85AAFF;   /* hover: darker on light, brighter on dark */
+--iris:        #6D3FE0;          #9B7BFF;   /* violet · Education */
+--aqua:        #0C677F;          #3EC8E0;   /* cyan · Toolchain */
+--rose:        #BE185D;          #F472B6;   /* magenta · Selected Work */
+--ok:          #116A33;          #4ADE80;   /* green · status dot + Contact */
 ```
 
 **Rules:**
-- Volt is the only accent: section labels, the gradient phrase
-  (`.volt-gradient`), primary CTA, link hovers, open-entry borders.
-- The volt→arc gradient appears on exactly two phrases (hero "fail loudly",
-  contact "Let's talk.") — never on body text.
-- Glow lives in tokens (`--cta-glow`, `--pulse-glow`) so light mode can be
-  subtler than dark.
-- Tailwind alpha modifiers (`text-volt/60`) do NOT work on var() colors —
-  add an explicit token (see `--volt-soft`).
-- Filled-volt elements use `text-ground` (adapts per theme and passes AA
-  both ways); never `text-white`.
+- **Interactive = volt, always** (link hovers, primary CTA, expand buttons).
+  Section hues are identity only: heading labels, ghost numerals, skill
+  chips, project row accents, metric cards.
+- Section hue map: 01 Experience volt · 02 Education iris · 03 Toolchain
+  aqua · 04 Selected Work rose · 05 Contact ok. Pass static Tailwind
+  classes + the CSS var to `SectionHeading`.
+- Gradients: `.volt-gradient` (volt→iris→rose) on the hero phrase;
+  `.mint-gradient` (ok→aqua) on the contact phrase; `.spectrum-strip`
+  (all five hues, animated pan) as the 2px top edge in the navbar.
+  Never gradient body text.
+- Tinted fills (chips, metric card edges) use
+  `color-mix(in srgb, var(--hue) N%, transparent)` — Tailwind alpha
+  modifiers do NOT work on var() colors.
+- All five hues pass 4.5:1 on ground in BOTH themes — don't brighten the
+  light values or darken the dark ones without rechecking.
+- Filled-volt elements use `text-ground`; never `text-white`.
+- No gold/amber, no teal-as-primary. Glow lives in `--cta-glow`.
+- Light mode must never use pure white or near-white grounds; keep the
+  blue-grey paper feel (owner: bright white hurts the eyes).
 
 ---
 
@@ -77,32 +90,42 @@ Semantics: `ground` = page, `surface` = raised, `ink` = primary text,
 ```
 Max content width:  1100px (max-w-content)
 Horizontal padding: px-6 mobile, px-10 tablet, px-12 desktop
-Section padding:    py-16 mobile, py-24 desktop
+Section padding:    py-14 mobile, py-20 desktop
 ```
 
-- Sections use `SectionHeading` with mono index labels (`01 · Experience` …
-  `05 · Contact`) prefixed by a short volt dash.
-- Content is hairline rows (`border-t border-line-faint`, `last:border-b`) —
-  no cards, no pills. Skills are a ledger (mono category left, prose right).
-  Projects are an editorial index (mono number, title, volt context tag).
-- Experience entries carry a 2px left border: volt when expanded,
-  transparent→line on hover when collapsed.
-- Hero only: `.hero-grid` blueprint texture (masked radial fade from top).
+- Sections 01–04 use the `Section` shell: on lg+ a sticky left rail
+  (250px) holds the ghost numeral, mono index, title, and description
+  while content scrolls in the right column. Mobile stacks normally.
+- Every section has its own shape — the page must NOT read as stacked
+  full-width rows: Experience is a timeline (rail line + node dots, volt
+  when expanded); Education is a pair of cards; Skills is a bento mosaic
+  (three small tiles, then two wide, spans tuned to chip counts);
+  Projects is a featured-card grid (first project spans the row; the
+  last card stretches if it would orphan). Cards share one anatomy:
+  rounded-[12px], `bg-surface`, hairline border, 2px hue top edge via
+  color-mix, hover lift.
+- Contact (05) deliberately breaks the rail pattern: one centered
+  finale panel with a soft mint radial glow.
+- Hero: `.hero-grid` blueprint texture, then the metric board — four `Stat` cards (uptime, peak msgs/day, stores, years),
+  one hue each, colored top edge. All numbers sourced from
+  data/experience.md; throughput is one card among four, never the headline.
+- Copy style: avoid em-dashes in site copy — prefer periods, commas, or
+  colons. Use `·` as the separator in titles and labels.
 
 ---
 
 ## Motion
 
 One orchestrated moment (hero entrance, staggered rise, 0.7s,
-`cubic-bezier(0.22,1,0.36,1)`) plus one living element (the pulse trace).
+`cubic-bezier(0.22,1,0.36,1)`) plus two quiet living elements: the
+spectrum strip's 14s gradient pan and the status dot's 2.4s pulse.
+No pulse/heartbeat line in the page body (owner removed it); the ECG
+blip survives only as the favicon/OG brand glyph.
 
 - **LCP rule:** hero h1 and bio use `hero-rise-solid` (transform only —
   never animate the LCP element from `opacity: 0`).
 - Scroll reveals: `Reveal` toggles `.is-visible`; hidden state is gated
   behind `html.js` so content is visible without JavaScript.
-- Pulse trace: CSS dash animation on a `pathLength`-normalized SVG path;
-  the only looping animation on the site. Static at 50% opacity under
-  `prefers-reduced-motion`.
 - Experience expand: CSS `grid-template-rows 0fr→1fr`.
 - Theme switch: 0.3s background/color transition (disabled under
   reduced motion).

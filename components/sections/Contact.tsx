@@ -1,33 +1,44 @@
-import Image from 'next/image';
-import SectionHeading from '@/components/ui/SectionHeading';
 import Reveal from '@/components/ui/Reveal';
 import { contact } from '@/lib/data';
 import { ArrowUpRight, Mail } from '@/components/ui/Icons';
 
+/**
+ * The closing panel deliberately breaks the side-rail pattern:
+ * one centered card, mint accent, nothing else competing.
+ */
 export default function Contact() {
   return (
-    <section id="contact" aria-label="Contact" className="py-16 md:py-24 scroll-mt-8">
-      <SectionHeading index="05" title="Contact" />
+    <section id="contact" aria-label="Contact" className="py-14 md:py-20 scroll-mt-8">
       <Reveal>
-        <div className="flex flex-col sm:flex-row items-start gap-8 md:gap-12">
-          <Image
-            src="/profile.jpg"
-            alt="Portrait of Awais Waheed"
-            width={104}
-            height={104}
-            className="h-[104px] w-[104px] shrink-0 rounded-[10px] object-cover
-                       border border-line"
+        <div
+          className="relative overflow-hidden rounded-[16px] border border-line-faint bg-surface
+                     px-6 py-14 md:px-12 md:py-20 text-center"
+          style={{
+            borderTop: '2px solid color-mix(in srgb, var(--ok) 70%, transparent)',
+          }}
+        >
+          {/* Soft mint glow behind the statement */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(ellipse 60% 55% at 50% 0%, color-mix(in srgb, var(--ok) 7%, transparent), transparent 70%)',
+            }}
           />
-          <div className="min-w-0">
-            <p className="font-display font-semibold text-ink text-[clamp(1.5rem,3vw,2.1rem)]
-                          leading-snug tracking-[-0.015em] max-w-[24ch] mb-5">
-              Building something at scale?{' '}
-              <span className="volt-gradient whitespace-nowrap">Let&apos;s talk.</span>
+          <div className="relative mx-auto max-w-2xl">
+            <p className="font-mono text-xs uppercase tracking-[0.22em] text-ok mb-5">
+              05 · Contact
             </p>
-            <p className="text-[15px] leading-[1.8] text-fog max-w-[58ch] mb-8">
+            <h2 className="font-display font-semibold text-ink tracking-[-0.015em] leading-[1.15]
+                           text-[clamp(1.9rem,4vw,2.8rem)] mb-5">
+              Building something at scale?{' '}
+              <span className="mint-gradient whitespace-nowrap">Let&apos;s talk.</span>
+            </h2>
+            <p className="text-[15px] leading-[1.8] text-fog max-w-[52ch] mx-auto mb-9">
               I&apos;m open to senior backend and distributed-systems roles, and to
               interesting consulting work. If you&apos;re moving serious traffic and
-              think I&apos;d be a fit — reach out.
+              think I&apos;d be a fit, reach out.
             </p>
             <a
               href={`mailto:${contact.email}`}
@@ -35,10 +46,10 @@ export default function Contact() {
                          underline decoration-line underline-offset-8
                          hover:text-volt hover:decoration-volt transition-colors duration-200 break-all"
             >
-              <Mail size={17} className="shrink-0 text-volt" />
+              <Mail size={17} className="shrink-0 text-ok" />
               {contact.email}
             </a>
-            <div className="mt-7 flex flex-wrap items-center gap-x-7 gap-y-3">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-7 gap-y-3">
               <a
                 href={contact.github}
                 target="_blank"

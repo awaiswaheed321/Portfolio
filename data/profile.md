@@ -56,7 +56,7 @@ Based in Irving, TX. Open to relocation.
 
 ### Master of Science, Computer Science
 **University:** Maharishi International University — Fairfield, IA
-**Years:** 2024 – Present (Expected Apr 2027)
+**Years:** 2024 – 2026
 
 ### Bachelor of Science, Computer Sciences
 **University:** SEECS, NUST — Islamabad, Pakistan
